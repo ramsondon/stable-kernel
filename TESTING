@@ -1,0 +1,8 @@
+Testing Results:
+
+v3.2-x0
+Beagle C4: musb:? ehci:? dvi:? sgx:?
+Beagle xM: musb:? ehci:? dvi:? sgx:? ulcd:?
+igevp2:    musb:? echi:? dvi:?
+Panda:            echi:? dvi:? hdmi:?
+Panda ES:         echi:? dvi:? hdmi:?
