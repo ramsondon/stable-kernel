@@ -4,5 +4,5 @@ v3.2-x0
 Beagle C4: musb:? ehci:? dvi:? sgx:?
 Beagle xM: musb:? ehci:Y dvi:? sgx:? ulcd:Y
 igevp2:    musb:? echi:? dvi:?
-Panda:            echi:? dvi:? hdmi:?
-Panda ES:         echi:? dvi:? hdmi:?
+Panda:            echi:Y dvi:Y hdmi:N wifi:Y
+Panda ES:         echi:Y dvi:Y hdmi:N wifi:Y
