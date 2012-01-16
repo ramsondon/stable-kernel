@@ -1,6 +1,6 @@
 #!/bin/bash -e
 #
-# Copyright (c) 2009-2011 Robert Nelson <robertcnelson@gmail.com>
+# Copyright (c) 2009-2012 Robert Nelson <robertcnelson@gmail.com>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -154,6 +154,9 @@ if [ \$(uname -m) == "armv7l" ] ; then
   echo "Extracting target files to rootfs"
   sudo tar xf target_libs.tar.gz -C /
 
+ echo "[default]" | sudo tee /etc/powervr.ini
+ echo "WindowSystem=libpvrPVR2D_FRONTWSEGL.so" | sudo tee -a /etc/powervr.ini
+
   if which lsb_release >/dev/null 2>&1 && [ "\$(lsb_release -is)" = Ubuntu ]; then
 
     if [ ! \$(which devmem2) ];then
@@ -171,6 +174,10 @@ if [ \$(uname -m) == "armv7l" ] ; then
       sudo chmod +x /etc/rcS.d/S60pvr.sh
     else
       #karmic/lucid/maverick/natty etc
+      sudo update-rc.d -f pvr remove
+      if [ -f /etc/init.d/pvr ] ; then
+        rm -f /etc/init.d/pvr || true
+      fi
       sudo cp /opt/pvr /etc/init.d/pvr
       sudo chmod +x /etc/init.d/pvr
       sudo update-rc.d pvr defaults
@@ -278,6 +285,13 @@ function copy_sgx_system_files {
  sudo cp ${DIR}/SDK_BIN/${SGX_BIN_NAME}_${SGX_VERSION}/gfx_rel_es5.x/${FILE_PREFIX} ${DIR}/SDK/libs/usr/bin/ES5.0
  sudo cp ${DIR}/SDK_BIN/${SGX_BIN_NAME}_${SGX_VERSION}/gfx_rel_es6.x/${FILE_PREFIX} ${DIR}/SDK/libs/usr/bin/ES6.0
  sudo cp ${DIR}/SDK_BIN/${SGX_BIN_NAME}_${SGX_VERSION}/gfx_rel_es8.x/${FILE_PREFIX} ${DIR}/SDK/libs/usr/bin/ES8.0
+
+ FILE_PREFIX="xgle*"
+ sudo cp ${DIR}/SDK_BIN/${SGX_BIN_NAME}_${SGX_VERSION}/gfx_rel_es3.x/${FILE_PREFIX} ${DIR}/SDK/libs/usr/bin/ES3.0
+ sudo cp ${DIR}/SDK_BIN/${SGX_BIN_NAME}_${SGX_VERSION}/gfx_rel_es5.x/${FILE_PREFIX} ${DIR}/SDK/libs/usr/bin/ES5.0
+ sudo cp ${DIR}/SDK_BIN/${SGX_BIN_NAME}_${SGX_VERSION}/gfx_rel_es6.x/${FILE_PREFIX} ${DIR}/SDK/libs/usr/bin/ES6.0
+ sudo cp ${DIR}/SDK_BIN/${SGX_BIN_NAME}_${SGX_VERSION}/gfx_rel_es8.x/${FILE_PREFIX} ${DIR}/SDK/libs/usr/bin/ES8.0
+
 
 file-pvr-startup
 
