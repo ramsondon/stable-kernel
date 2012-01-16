@@ -36,13 +36,7 @@ if [ "$PLATFORM" == "x86_64" ]; then
  echo "--------------------------------------------------------------"
 fi
 
-#SGX_VERSION=3_01_00_06
-#SGX_VERSION=3_01_00_07
-#SGX_BIN_NAME="OMAP35x_Graphics_SDK_setuplinux"
-
-#SGX_VERSION=4_00_00_01
-#SGX_VERSION=4_03_00_01
-SGX_VERSION=4_03_00_02
+SGX_VERSION=4_05_00_03
 SGX_BIN_NAME="Graphics_SDK_setuplinux"
 
 SGX_BIN=${SGX_BIN_NAME}_${SGX_VERSION}.bin
@@ -65,6 +59,7 @@ if [ -e ${DIR}/${SGX_BIN} ]; then
     echo ""
     ${DIR}/${SGX_BIN} --mode console --prefix ${DIR}/SDK_BIN/${SGX_BIN_NAME}_${SGX_VERSION} <<setupSDK
 Y
+ qY
 setupSDK
     cd ${DIR}
   fi
@@ -162,12 +157,12 @@ if [ \$(uname -m) == "armv7l" ] ; then
   if which lsb_release >/dev/null 2>&1 && [ "\$(lsb_release -is)" = Ubuntu ]; then
 
     if [ ! \$(which devmem2) ];then
-        if ls /devmem2*_armel.deb >/dev/null 2>&1;then
+        if [ -f /devmem2*_armel.deb ] ; then
           sudo dpkg -i /devmem2*_armel.deb
         fi
     fi
 
-    if ls /devmem2*_armel.deb >/dev/null 2>&1;then
+    if [ -f /devmem2*_armel.deb ] ; then
         sudo rm -f /devmem2*_armel.deb
     fi
 
@@ -212,7 +207,9 @@ DIR=\$PWD
 
 if [ \$(uname -m) == "armv7l" ] ; then
 
- sudo rm /etc/powervr-esrev
+ if [ -f /etc/powervr-esrev ] ; then
+  sudo rm /etc/powervr-esrev || true
+ fi
  sudo depmod -a omaplfb
 
  if which lsb_release >/dev/null 2>&1 && [ "\$(lsb_release -is)" = Ubuntu ]; then
@@ -236,23 +233,51 @@ runSGX
 
 function copy_sgx_system_files {
 	sudo rm -rf ${DIR}/SDK/
-	mkdir -p ${DIR}/SDK/libs/usr/lib/ES2.0
-	mkdir -p ${DIR}/SDK/libs/usr/bin/ES2.0
 	mkdir -p ${DIR}/SDK/libs/usr/lib/ES3.0
 	mkdir -p ${DIR}/SDK/libs/usr/bin/ES3.0
+
 	mkdir -p ${DIR}/SDK/libs/usr/lib/ES5.0
 	mkdir -p ${DIR}/SDK/libs/usr/bin/ES5.0
 
+	mkdir -p ${DIR}/SDK/libs/usr/lib/ES6.0
+	mkdir -p ${DIR}/SDK/libs/usr/bin/ES6.0
+
+	mkdir -p ${DIR}/SDK/libs/usr/lib/ES8.0
+	mkdir -p ${DIR}/SDK/libs/usr/bin/ES8.0
+
 	mkdir -p ${DIR}/SDK/libs/opt/
 
-	sudo cp ${DIR}/SDK_BIN/${SGX_BIN_NAME}_${SGX_VERSION}/gfx_rel_es2.x/lib* ${DIR}/SDK/libs/usr/lib/ES2.0
-	sudo cp ${DIR}/SDK_BIN/${SGX_BIN_NAME}_${SGX_VERSION}/gfx_rel_es2.x/p[dv]* ${DIR}/SDK/libs/usr/bin/ES2.0
+ #Copy all Libaries
+ FILE_PREFIX="*.so*"
+ sudo cp ${DIR}/SDK_BIN/${SGX_BIN_NAME}_${SGX_VERSION}/gfx_rel_es3.x/${FILE_PREFIX} ${DIR}/SDK/libs/usr/lib/ES3.0
+ sudo cp ${DIR}/SDK_BIN/${SGX_BIN_NAME}_${SGX_VERSION}/gfx_rel_es5.x/${FILE_PREFIX} ${DIR}/SDK/libs/usr/lib/ES5.0
+ sudo cp ${DIR}/SDK_BIN/${SGX_BIN_NAME}_${SGX_VERSION}/gfx_rel_es6.x/${FILE_PREFIX} ${DIR}/SDK/libs/usr/lib/ES6.0
+ sudo cp ${DIR}/SDK_BIN/${SGX_BIN_NAME}_${SGX_VERSION}/gfx_rel_es8.x/${FILE_PREFIX} ${DIR}/SDK/libs/usr/lib/ES8.0
 
-	sudo cp ${DIR}/SDK_BIN/${SGX_BIN_NAME}_${SGX_VERSION}/gfx_rel_es3.x/lib* ${DIR}/SDK/libs/usr/lib/ES3.0
-	sudo cp ${DIR}/SDK_BIN/${SGX_BIN_NAME}_${SGX_VERSION}/gfx_rel_es3.x/p[dv]* ${DIR}/SDK/libs/usr/bin/ES3.0
+ FILE_PREFIX="*.a"
+ sudo cp ${DIR}/SDK_BIN/${SGX_BIN_NAME}_${SGX_VERSION}/gfx_rel_es3.x/${FILE_PREFIX} ${DIR}/SDK/libs/usr/lib/ES3.0
+ sudo cp ${DIR}/SDK_BIN/${SGX_BIN_NAME}_${SGX_VERSION}/gfx_rel_es5.x/${FILE_PREFIX} ${DIR}/SDK/libs/usr/lib/ES5.0
+ sudo cp ${DIR}/SDK_BIN/${SGX_BIN_NAME}_${SGX_VERSION}/gfx_rel_es6.x/${FILE_PREFIX} ${DIR}/SDK/libs/usr/lib/ES6.0
+ sudo cp ${DIR}/SDK_BIN/${SGX_BIN_NAME}_${SGX_VERSION}/gfx_rel_es8.x/${FILE_PREFIX} ${DIR}/SDK/libs/usr/lib/ES8.0
 
-	sudo cp ${DIR}/SDK_BIN/${SGX_BIN_NAME}_${SGX_VERSION}/gfx_rel_es5.x/lib* ${DIR}/SDK/libs/usr/lib/ES5.0
-	sudo cp ${DIR}/SDK_BIN/${SGX_BIN_NAME}_${SGX_VERSION}/gfx_rel_es5.x/p[dv]* ${DIR}/SDK/libs/usr/bin/ES5.0
+
+ FILE_PREFIX="*_test"
+ sudo cp ${DIR}/SDK_BIN/${SGX_BIN_NAME}_${SGX_VERSION}/gfx_rel_es3.x/${FILE_PREFIX} ${DIR}/SDK/libs/usr/bin/ES3.0
+ sudo cp ${DIR}/SDK_BIN/${SGX_BIN_NAME}_${SGX_VERSION}/gfx_rel_es5.x/${FILE_PREFIX} ${DIR}/SDK/libs/usr/bin/ES5.0
+ sudo cp ${DIR}/SDK_BIN/${SGX_BIN_NAME}_${SGX_VERSION}/gfx_rel_es6.x/${FILE_PREFIX} ${DIR}/SDK/libs/usr/bin/ES6.0
+ sudo cp ${DIR}/SDK_BIN/${SGX_BIN_NAME}_${SGX_VERSION}/gfx_rel_es8.x/${FILE_PREFIX} ${DIR}/SDK/libs/usr/bin/ES8.0
+
+ FILE_PREFIX="*gl*"
+ sudo cp ${DIR}/SDK_BIN/${SGX_BIN_NAME}_${SGX_VERSION}/gfx_rel_es3.x/${FILE_PREFIX} ${DIR}/SDK/libs/usr/bin/ES3.0
+ sudo cp ${DIR}/SDK_BIN/${SGX_BIN_NAME}_${SGX_VERSION}/gfx_rel_es5.x/${FILE_PREFIX} ${DIR}/SDK/libs/usr/bin/ES5.0
+ sudo cp ${DIR}/SDK_BIN/${SGX_BIN_NAME}_${SGX_VERSION}/gfx_rel_es6.x/${FILE_PREFIX} ${DIR}/SDK/libs/usr/bin/ES6.0
+ sudo cp ${DIR}/SDK_BIN/${SGX_BIN_NAME}_${SGX_VERSION}/gfx_rel_es8.x/${FILE_PREFIX} ${DIR}/SDK/libs/usr/bin/ES8.0
+
+ FILE_PREFIX="p[dv]*"
+ sudo cp ${DIR}/SDK_BIN/${SGX_BIN_NAME}_${SGX_VERSION}/gfx_rel_es3.x/${FILE_PREFIX} ${DIR}/SDK/libs/usr/bin/ES3.0
+ sudo cp ${DIR}/SDK_BIN/${SGX_BIN_NAME}_${SGX_VERSION}/gfx_rel_es5.x/${FILE_PREFIX} ${DIR}/SDK/libs/usr/bin/ES5.0
+ sudo cp ${DIR}/SDK_BIN/${SGX_BIN_NAME}_${SGX_VERSION}/gfx_rel_es6.x/${FILE_PREFIX} ${DIR}/SDK/libs/usr/bin/ES6.0
+ sudo cp ${DIR}/SDK_BIN/${SGX_BIN_NAME}_${SGX_VERSION}/gfx_rel_es8.x/${FILE_PREFIX} ${DIR}/SDK/libs/usr/bin/ES8.0
 
 file-pvr-startup
 
@@ -301,6 +326,8 @@ function tar_up_examples {
 	rm -rf ${DIR}/SDK/GFX_Linux_SDK/OGLES2
 	tar czf ${DIR}/SDK/GFX_Linux_SDK/OVG.tar.gz ./OVG
 	rm -rf ${DIR}/SDK/GFX_Linux_SDK/OVG
+	tar czf ${DIR}/SDK/GFX_Linux_SDK/ti-components.tar.gz ./ti-components
+	rm -rf ${DIR}/SDK/GFX_Linux_SDK/ti-components
 
 	cd ${DIR}/SDK
 	tar czfv ${DIR}/GFX_Linux_SDK.tar.gz ./GFX_Linux_SDK
