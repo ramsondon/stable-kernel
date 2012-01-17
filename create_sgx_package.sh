@@ -157,6 +157,10 @@ if [ \$(uname -m) == "armv7l" ] ; then
  echo "[default]" | sudo tee /etc/powervr.ini
  echo "WindowSystem=libpvrPVR2D_FRONTWSEGL.so" | sudo tee -a /etc/powervr.ini
 
+ if [ -f /etc/powervr-esrev ] ; then
+  sudo rm -f /etc/powervr-esrev || true
+ fi
+
   if which lsb_release >/dev/null 2>&1 && [ "\$(lsb_release -is)" = Ubuntu ]; then
 
     if [ ! \$(which devmem2) ];then
