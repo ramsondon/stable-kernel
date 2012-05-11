@@ -108,6 +108,8 @@ beagle () {
 	#dont push, upstream went a different way..
 	git am "${DIR}/patches/beagle/0012-ASoC-omap-add-MODULE_ALIAS-to-mcbsp-and-pcm-drivers.patch"
 	git am "${DIR}/patches/beagle/0013-ASoC-omap-convert-per-board-modules-to-platform-driv.patch"
+
+	git am "${DIR}/patches/beagle/0001-beagle-expansion-spidev.patch"
 }
 
 devkit8000 () {

@@ -1,0 +1,123 @@
+From 2dfb72670afb0afd9cf363b8c4eeffc802d3c4a2 Mon Sep 17 00:00:00 2001
+From: Robert Nelson <robertcnelson@gmail.com>
+Date: Thu, 10 May 2012 20:22:09 -0500
+Subject: [PATCH] beagle: expansion spidev
+
+Signed-off-by: Robert Nelson <robertcnelson@gmail.com>
+---
+ arch/arm/mach-omap2/board-omap3beagle.c |   71 ++++++++++++++++++++++++++-----
+ 1 file changed, 61 insertions(+), 10 deletions(-)
+
+diff --git a/arch/arm/mach-omap2/board-omap3beagle.c b/arch/arm/mach-omap2/board-omap3beagle.c
+index a7d81fc..c73d39b 100644
+--- a/arch/arm/mach-omap2/board-omap3beagle.c
++++ b/arch/arm/mach-omap2/board-omap3beagle.c
+@@ -31,6 +31,7 @@
+ #include <linux/mtd/nand.h>
+ #include <linux/mmc/host.h>
+ 
++#include <linux/spi/spi.h>
+ #include <linux/regulator/machine.h>
+ #include <linux/i2c/twl.h>
+ #include <linux/i2c/tsc2007.h>
+@@ -486,12 +487,14 @@ static struct omap2_hsmmc_info mmc[] = {
+ 		.caps		= MMC_CAP_4_BIT_DATA | MMC_CAP_8_BIT_DATA,
+ 		.gpio_wp	= -EINVAL,
+ 	},
+-	{
+-		.mmc		= 2,
+-		.caps       = MMC_CAP_4_BIT_DATA,
+-		.transceiver	= true,
+-		.ocr_mask	= 0x00100000,	/* 3.3V */
+-	},
++//WE should only enabled this zippy1/2
++//	{
++//		.mmc		= 2,
++//		.caps       = MMC_CAP_4_BIT_DATA,
++//		.transceiver	= true,
++//		.ocr_mask	= 0x00100000,	/* 3.3V */
++//	},
++//#endif
+ 	{}	/* Terminator */
+ };
+ 
+@@ -698,6 +701,45 @@ static struct i2c_board_info __initdata beagle_i2c2_bbtoys_ulcd[] = {};
+ static void __init omap3beagle_tsc2007_init(void) { return; }
+ #endif
+ 
++static void __init omap3_beagle_config_mcspi3_mux(void)
++{
++        // NOTE: Clock pins need to be in input mode
++	omap_mux_init_signal("sdmmc2_clk.mcspi3_clk", OMAP_PIN_INPUT);
++	omap_mux_init_signal("sdmmc2_dat3.mcspi3_cs0", OMAP_PIN_OUTPUT);
++	omap_mux_init_signal("sdmmc2_dat2.mcspi3_cs1", OMAP_PIN_OUTPUT);
++	omap_mux_init_signal("sdmmc2_cmd.mcspi3_simo", OMAP_PIN_OUTPUT);
++	omap_mux_init_signal("sdmmc2_dat0.mcspi3_somi", OMAP_PIN_INPUT_PULLUP);
++}
++
++static void __init omap3_beagle_config_damians_watterott_mux(void)
++{
++	omap3_beagle_config_mcspi3_mux();
++
++	omap_mux_init_signal("uart2_cts.gpio_144", OMAP_PIN_OUTPUT );
++	omap_mux_init_signal("i2c2_sda.gpio_183", OMAP_PIN_OUTPUT );
++}
++
++static struct spi_board_info beagle_mcspi_board_info[] = {
++	// spi 3.0
++	{
++		.modalias	= "spidev",
++		.max_speed_hz	= 48000000, //48 Mbps
++		.bus_num	= 3,
++		.chip_select	= 0,
++		.mode = SPI_MODE_1,
++	},
++
++	// spi 3.1
++	{
++		.modalias	= "spidev",
++		.max_speed_hz	= 48000000, //48 Mbps
++		.bus_num	= 3,
++		.chip_select	= 1,
++		.mode = SPI_MODE_1,
++	},
++
++};
++
+ static int __init omap3_beagle_i2c_init(void)
+ {
+ 	omap3_pmic_get_config(&beagle_twldata,
+@@ -714,10 +756,11 @@ static int __init omap3_beagle_i2c_init(void)
+ 		omap_register_i2c_bus(2, 400,  beagle_i2c2_bbtoys_ulcd,
+ 							ARRAY_SIZE(beagle_i2c2_bbtoys_ulcd));
+ 	}
+-	else
+-	{
+-	omap_register_i2c_bus(2, 400, beagle_i2c2_boardinfo, ARRAY_SIZE(beagle_i2c2_boardinfo));
+-	}
++//need to disable this with spidev
++//	else
++//	{
++//	omap_register_i2c_bus(2, 400, beagle_i2c2_boardinfo, ARRAY_SIZE(beagle_i2c2_boardinfo));
++//	}
+ 
+ 	/* Bus 3 is attached to the DVI port where devices like the pico DLP
+ 	 * projector don't work reliably with 400kHz */
+@@ -958,6 +1001,14 @@ static void __init omap3_beagle_init(void)
+ 		omap3beagle_tsc2007_init();
+ 	}
+ 
++	if(!strcmp(expansionboard_name, "spidev"))
++	{
++		printk(KERN_INFO "Beagle expansionboard: registering spidev\n");
++		omap3_beagle_config_damians_watterott_mux();
++		spi_register_board_info(beagle_mcspi_board_info,
++			ARRAY_SIZE(beagle_mcspi_board_info));
++	}
++
+ 	usb_musb_init(NULL);
+ 	usbhs_init(&usbhs_bdata);
+ 	omap_nand_flash_init(NAND_BUSWIDTH_16, omap3beagle_nand_partitions,
+-- 
+1.7.10
+
