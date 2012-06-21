@@ -275,8 +275,8 @@ fi
 		CONFIG_DEBUG_SECTION="CONFIG_DEBUG_SECTION_MISMATCH=y"
 	fi
 
-  git_kernel
-  patch_kernel
+#  git_kernel
+#  patch_kernel
   copy_defconfig
   make_menuconfig
 	if [ "x${GCC_OVERRIDE}" != "x" ] ; then
