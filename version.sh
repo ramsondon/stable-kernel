@@ -11,9 +11,9 @@ STABLE_PATCH=21
 #RC_KERNEL=3.2
 #RC_PATCH=-rc7
 
-ABI=13
+ABI="encryption-proxy"
 
-BUILD=x${ABI}
+BUILD=${ABI}
 
 BUILDREV=1.0
 DISTRO=cross
