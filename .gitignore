@@ -1,6 +1,7 @@
 system.sh
 dl
 deploy
+scripts/tests
 SDK
 SDK_BIN
 DSP_Install_libs.tar.gz
