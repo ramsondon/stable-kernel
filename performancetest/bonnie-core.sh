@@ -74,8 +74,12 @@ done
 
 # CREATE HTML
 # remove previous html file
-rm ${OUTPUT_FILE}
+HTML_OUTPUT_FILE="${OUTPUT_FILE}.html"
 
+if [ -f ${HTML_OUTPUT_FILE} ]; then
+	rm ${HTML_OUTPUT_FILE}
+fi
 # create html file from csv output
-bon_csv2html ${OUTPUT_FILE} >> "${OUTPUT_FILE}.html"
+echo "creating html output: ${HTML_OUTPUT_FILE}"
+bon_csv2html ${OUTPUT_FILE} >> ${HTML_OUTPUT_FILE}
 
