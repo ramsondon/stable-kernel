@@ -1,12 +1,22 @@
 #!/bin/bash
 #
 # @author: Matthias Schmid
+# @email: ramsondon@gmail.com
 # @date: 2012/04/20
 #
 # cleans the kernel source code in folder KERNEL
 
-# TODO: replace by reading system.h
-CC=arm-linux-gnueabi-
+unset CC
+
+
+SYS_CONFIG="system.sh"
+
+if [ ! -f ${SYS_CONFIG} ]; then
+	echo "${SYS_CONFIG} is missing"
+	exit
+else 
+	. ${SYS_CONFIG}
+fi
 
 # current directory
 DIR=$PWD
