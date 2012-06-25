@@ -1,0 +1,7 @@
+encfs
+
+# what to do
+ubuntu@omap:~$ sudo mount /dev/sda /mnt/storage
+ubuntu@omap:~$ encfs /mnt/storage/ /mnt/filesys/
+
+
