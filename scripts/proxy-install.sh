@@ -54,3 +54,11 @@ fi
 # append line:	sudo modprobe g_mass_storage <device>
 
 # TODO: append line to .bashrc of autologin user
+
+
+
+# create mount point for keystore
+
+# TODO: insert /dev/sdb /mnt/keystore into fstab
+echo "creating mount point for keystore"
+sudo mkdir /mnt/keystore
