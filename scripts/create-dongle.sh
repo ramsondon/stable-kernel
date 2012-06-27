@@ -25,6 +25,7 @@
 #
 # REQUIREMENTS:
 # - makepasswd
+# - dosfstools
 #
 # ISSUES:
 # - implement encfs extension (where to pass the key for the dongle?)
@@ -50,20 +51,24 @@ KEY=$(makepasswd --char=100)
 echo "generated key: ${KEY}"
 
 # create key file
-echo "creating key file ${KEY_FILE} at ${PWD}"
+echo "creating key file ${KEY_FILE}"
 echo ${KEY} > ${KEY_FILE}
 
 if [ ! -d ${KEYSTORE_DIR} ]; then
-	echo "creating directory ${KEYSTORE_DIR}"
 	mkdir -p ${KEYSTORE_DIR}	
 fi
 
+# unmount target device if mounted
 if mount | grep ${KEY_DEVICE}>/dev/null; then
 	echo "umount ${KEY_DEVICE}"
 	sudo umount ${KEY_DEVICE}
 fi
 
-echo "mounting ${KEY_DEVICE} to ${KEYSTORE_DIR}..." 
+#erase all data and deploy filesystem
+echo "creating filesystem"
+sudo mkfs.vfat -I ${KEY_DEVICE}
+
+echo "mounting ${KEY_DEVICE}" 
 sudo mount ${KEY_DEVICE} ${KEYSTORE_DIR}
 
 while ! mount | grep ${KEYSTORE_DIR} > /dev/null ; do
@@ -71,7 +76,7 @@ while ! mount | grep ${KEYSTORE_DIR} > /dev/null ; do
 	BAR="foo"
 done
 
-echo "copying ${KEY_FILE} to ${KEYSTORE_DIR}"
+echo "copying ${KEY_FILE} on ${KEY_DEVICE}"
 sudo cp ${KEY_FILE} ${KEYSTORE_DIR}
 
 echo "cleaning up..."
