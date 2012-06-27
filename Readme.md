@@ -9,4 +9,4 @@ This preconfigured Kernel is for using your BeagleBoard as an encryption proxy f
 ----------------------
 ### Kernel Version
 
-3.0.2-encryption-proxy
+3.2.21-encryption-proxy
