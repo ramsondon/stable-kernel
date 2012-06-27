@@ -66,7 +66,7 @@ COMMAND="sudo bonnie++ -d ${DIRECTORY_UNDER_TEST} -u 0 -s size${SIZE} -m \"${TES
 
 COUNTER=0
 while [ $COUNTER -lt ${NR_OF_TESTS} ]; do
-	echo "${i}: test ${DIRECTORY_UNDER_TEST}; ${SIZE}MB; write to ${OUTPUT_FILE}"
+	echo "${i}: test ${TEST_NAME} at ${DIRECTORY_UNDER_TEST}; ${SIZE}MB; write to ${OUTPUT_FILE}"
 	eval ${COMMAND}
 	let COUNTER=COUNTER+1
 done

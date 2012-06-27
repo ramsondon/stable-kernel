@@ -22,5 +22,5 @@
 
 # shared preferences for bonnie-core
 
-DIRECTORY_UNDER_TEST="/mnt/test"
+DIRECTORY_UNDER_TEST="~/encrypted-filesys"
 OUTPUT_FILE="bonnie-test.csv"
