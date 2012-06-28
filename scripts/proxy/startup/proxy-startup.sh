@@ -22,14 +22,30 @@
 
 # This is the startup script for the encryption proxy.
 
-LIB_DIR="${PWD}/../../lib"
-LIB_STARTUP="${LIB_DIR}/lib-startup.sh"
+# include startup config
+STARTUP_CONFIG="config.sh"
+. ${STARTUP_CONFIG}
 
 # include lib-startup.sh
 . ${LIB_STARTUP}
 
+# include lib-mount.sh
+. ${LIB_MOUNT}
 
-start_usb_otg_gadget_driver
+# include lib-crypt.sh
+. ${LIB_CRYPT}
+
+# ************************** PROXY BOOT SEQUENCE *******************************
+# at this point the device mapper named encryption-storage must already exist
+
+# mount dongle
+safe_mount ${XM_DONGLE_DEVICE} ${XM_KEYSTORE_MOUNT_POINT}
+
+# open luks device
+create_temporary_device_mapper ${XM_STORAGE_DEVICE} ${XM_DEVICE_MAPPER_NAME} ${XM_KEY_FILE}
+
+# starts usb otg gadget driver as a mass storage
+start_mass_storage_driver ${ENCRYPTED_DEVICE}
 
 
 

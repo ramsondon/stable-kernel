@@ -20,17 +20,36 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-# lib-startup.sh
+# The shared configuration file for installing and booting the encryption proxy
 
+unset XM_TARGET_DEVICE
+unset XM_DONGLE_DEVICE
+unset XM_DEVICE_MAPPER_NAME
+unset XM_ENCRYPTED_DEVICE
 
-# @param $1 mapped target device file
-function start_mass_storage_driver()
-{
-	DEVICE=$1
-	DRIVER="g_mass_storage"
+unset XM_KEY_FILE
+unset XM_KEYSTORE_MOUNT_POINT
 
-	# start mass storage module
-	modprobe ${DRIVER} file=${DEVICE} stall=n
-}
+unset LIB_DIR
+unset LIB_CORE
+unset LIB_CRYPT
+unset LIB_INSTALL
+unset LIB_MOUNT
+unset LIB_STARTUP
 
+# libraries
+LIB_DIR="${PWD}/lib"
+LIB_CORE="${LIB_DIR}/lib-core.sh"
+LIB_CRYPTE="${LIB_DIR}/lib-crypt.sh"
+LIB_INSTALL="${LIB_DIR}/lib-install.sh"
+LIB_MOUNT="${LIB_DIR}/lib-mount.sh"
+LIB_STARTUP="${LIB_DIR}/lib-startup.sh"
 
+# BeagleBoard-xM device variables
+XM_STORAGE_DEVICE="/dev/sda"
+XM_DONGLE_DEVICE="/dev/sdb"
+XM_DEVICE_MAPPER_NAME="encryption-storage"
+XM_ENCRYPTED_DEVICE="dev/mapper/${DEVICE_MAPPER_NAME}"
+
+XM_KEY_FILE=".dongle.key"
+XM_KEYSTORE_MOUNT_POINT="/mnt/keystore"

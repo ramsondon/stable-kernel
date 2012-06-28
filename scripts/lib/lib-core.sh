@@ -33,3 +33,8 @@ function import_file_or_abort()
         fi
 }
 
+
+# import shared configuration for all lib-core.sh users
+SHARED_CONFIG="${PWD}/../config.sh"
+import_file_or_abort ${SHARED_CONFIG} 
+

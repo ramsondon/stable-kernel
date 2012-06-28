@@ -34,7 +34,6 @@ fi
 . ${LIB_CORE}
 
 # load lib-install.sh
-LIB_INSTALL="${LIB_DIR}/lib-install.sh"
 import_file_or_abort ${LIB_INSTALL}
 
 

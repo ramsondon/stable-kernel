@@ -30,7 +30,6 @@ fi
 . ${LIB_CORE}
 
 # load lib-install
-LIB_INSTALL="${DIR}/../lib/lib-install.sh"
 import_file_or_abort ${LIB_INSTALL}
 
 # refresh sources

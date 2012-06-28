@@ -34,14 +34,10 @@ fi
 . ${LIB_CORE}
 
 # include lib-install.sh
-LIB_INSTALL="${LIB_DIR}/lib-install.sh"
 import_file_or_abort ${LIB_INSTALL}
 
 
-PROXY_CONFIG="proxy-config.sh"
 INSTALL_DEPENDENCIES="proxy-deps.sh"
-
-import_file_or_abort ${PROXY_CONFIG}
 import_file_or_abort ${INSTALL_DEPENDENCIES}
 
 
@@ -74,6 +70,6 @@ import_file_or_abort ${INSTALL_DEPENDENCIES}
 
 # TODO: insert /dev/sdb /mnt/keystore into fstab
 echo "creating mount point for keystore"
-if [ ! -d ${KEYSTORE_DIR} ]; then
-	sudo mkdir ${KEYSTORE_DIR}
+if [ ! -d ${KEYSTORE_MOUNT_POINT} ]; then
+	sudo mkdir ${KEYSTORE_MOUNT_POINT}
 fi

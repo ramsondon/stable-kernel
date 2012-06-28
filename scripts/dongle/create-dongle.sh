@@ -30,7 +30,7 @@
 # ISSUES:
 # - implement encfs extension (where to pass the key for the dongle?)
 
-# lib-install.sh
+# lib-core.sh
 LIB_CORE="${PWD}/../lib/lib-core.sh"
 if [ ! -f ${LIB_CORE} ]; then
 	echo "ABORT: ${LIB_CORE} not found"
@@ -39,15 +39,7 @@ fi
 . ${LIB_CORE}
 
 # lib-mount.sh
-LIB_MOUNT="${PWD}/../lib/lib-mount.sh"
 import_file_or_abort ${LIB_MOUNT}
-
-
-# mount point for normal device
-KEYSTORE_DIR="${PWD}/keystore_mount_point"
-
-# name of the dongle key file
-KEY_FILE=".dongle.key"
 
 # nr of script parameters
 MIN_PARAMS=1
@@ -64,9 +56,11 @@ KEY=$(makepasswd --char=100)
 echo "generated key: ${KEY}"
 
 # create key file
-echo "creating key file ${KEY_FILE}"
-echo ${KEY} > ${KEY_FILE}
+echo "creating key file ${XM_KEY_FILE}"
+echo ${KEY} > ${XM_KEY_FILE}
 
+# create temporary keystore mount point
+KEYSTORE_DIR="${PWD}/temp_keystore_mount_point"
 if [ ! -d ${KEYSTORE_DIR} ]; then
 	mkdir -p ${KEYSTORE_DIR}	
 fi
@@ -80,8 +74,8 @@ sudo mkfs.vfat -I ${KEY_DEVICE}
 
 safe_mount ${KEY_DEVICE} ${KEYSTORE_DIR}
 
-echo "copying ${KEY_FILE} on ${KEY_DEVICE}"
-sudo cp ${KEY_FILE} ${KEYSTORE_DIR}
+echo "copying ${XM_KEY_FILE} on ${KEY_DEVICE}"
+sudo cp ${XM_KEY_FILE} ${KEYSTORE_DIR}
 
 echo "cleaning up..."
 # wait certain amount of time to clean up resources
@@ -91,6 +85,6 @@ sleep 1
 safe_umount ${KEY_DEVICE} ${KEYSTORE_DIR}
 
 sudo rm -rf ${KEYSTORE_DIR}
-rm ${KEY_FILE}
+rm ${XM_KEY_FILE}
 
 echo "dongle successfully created"
