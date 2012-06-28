@@ -24,6 +24,15 @@
 
 # this script updates and installs all necessary sources for the encryption-proxy
 
+# load install-core.sh
+INSTALL_CORE="install-core.sh"
+if [ ! -f ${INSTALL_CORE} ]; then
+	echo "ABORT: ${INSTALL_CORE} is missing"
+	exit
+else
+	. ${INSTALL_CORE}
+fi
+
 # Update Sources
 
 sudo apt-get udpate
@@ -31,23 +40,24 @@ sudo apt-get install dist-upgrade
 
 # Autologin: http://wiki.ubuntuusers.de/Autologin
 # install rungetty
-
-sudo apt-get install rungetty
+RUNGETTY="rungetty"
+check_or_install ${RUNGETTY}
 
 
 # Auto-mounting: 
 # http://wiki.ubuntuusers.de/Daten_verschl%C3%BCsseln#luks
 
-sudo apt-get install libpam-mount
+#sudo apt-get install libpam-mount
 
 # Cryptsetup
 # http://wiki.centos.org/HowTos/EncryptedFilesystem
+CRYPTSETUP="cryptsetup"
+check_or_install ${CRYPTSETUP}
 
-sudo apt-get install cryptsetup
 
 # loop aes
 # https://www.shell-tips.com/2008/07/13/using-losetup-and-dd-to-secure-sensitive-data-encrypted-block-device/
 
-sudo apt-get install loop-aes-utils
+#sudo apt-get install loop-aes-utils
 
 
