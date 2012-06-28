@@ -20,13 +20,23 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
+# load install-core.sh
+INSTALL_CORE="install-core.sh"
+if [ ! -f ${INSTALL_CORE} ]; then
+	echo "ABORT: install-core.sh is missing"
+	exit
+else
+	. ${INSTALL_CORE}
+fi
+
 # refresh sources
 sudo apt-get update
 
 # makepasswd - used for dongle keyfile generation
 # generates random passwords
-sudo apt-get install makepasswd
+MAKEPASSWD="makepasswd"
+check_or_install ${MAKEPASSWD}
 
 # for creating vfat filesystem
-sudo apt-get install dosfstools
-
+DOSFSTOOLS="dosfstools"
+check_or_install ${DOSFSTOOLS}
