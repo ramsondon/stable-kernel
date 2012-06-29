@@ -27,19 +27,27 @@ DIR=${PWD}
 DIR_UBUNTU="${DIR}/ubuntu-12.04-r3-minimal-armhf"
 DIR_KERNEL="${DIR}/linux"
 
-SCRIPT_INSTALL_IMAGE="install_image.sh"
+SCRIPT_BUILD_KERNEL="build_kernel.sh"
+SCRIPT_INSTALL_IMAGE="/tools/install_image.sh"
 SCRIPT_SETUP_SDCARD="setup_sdcard.sh"
-
 
 function build_kernel()
 {
-	# TODO: implement
+	bash ${DIR_KERNEL}${SCRIPT_BUILD_KERNEL}
 }
 
 function copy_kernel_to_sdcard()
 {
 	# TODO: implement
 	# use install_image.sh
+	bash ${DIR_KERNEL}${SCRIPT_INSTALL_IMAGE}
+}
+
+
+function setup_sdcard()
+{
+	# TODO: implement
+	bash ${DIR_UBUNTU}${SCRIPT_SETUP_SDCARD} --mmc ${MMC} --uboot beagle_xm
 }
 
 function setup_proxy()
@@ -48,14 +56,18 @@ function setup_proxy()
 	# setup startup script, etc.
 }
 
-function setup_sdcard()
-{
-	# TODO: implement
-	bash ${DIR_UBUNTU}${SCRIPT_SETUP_SDCARD}
-}
+# ******************************************************************************
+# ********************** start creating sdcard image ***************************
+# ******************************************************************************
 
+# include generic build config
+GENERIC_CONFIG="config.sh"
+if [ ! -f ${GENERIC_CONFIG} ]; then
+	echo "ABORT: ${GENERIC_CONFIG} not found"
+	exit -1
+fi
+. ${GENERIC_CONFIG}
 
-# start creating sdcard image
 echo "creating sdcard image"
 setup_sdcard
 echo "building kernel"
