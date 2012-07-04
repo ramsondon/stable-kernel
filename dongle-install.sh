@@ -21,12 +21,9 @@
 # THE SOFTWARE.
 
 # load lib-core.sh
-DIR=$(dirname $BASH_SOURCE)
-LIB_CORE="${DIR}/../lib/lib-core.sh"
-if [ ! -f ${LIB_CORE} ]; then
-	echo "ABORT: ${LIB_CORE} is missing"
-	exit
-fi
+DIR=${PWD}
+CONFIG_LIB="${DIR}/scripts/lib/config-lib.sh"
+. ${CONFIG_LIB}
 . ${LIB_CORE}
 
 # load lib-install

@@ -29,13 +29,9 @@
 #
 # ISSUES:
 # - implement encfs extension (where to pass the key for the dongle?)
-
+CONFIG_LIB="${PWD}/scripts/lib/config-lib.sh"
+. ${CONFIG_LIB}
 # lib-core.sh
-LIB_CORE="$(dirname $BASH_SOURCE)/../lib/lib-core.sh"
-if [ ! -f ${LIB_CORE} ]; then
-	echo "ABORT: ${LIB_CORE} not found"
-	exit
-fi
 . ${LIB_CORE}
 
 # lib-mount.sh
