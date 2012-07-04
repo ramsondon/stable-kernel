@@ -20,56 +20,26 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-
-# installs all dependencies for the proxy and makes fixups to run clean.
-
-
-# include lib-core.sh
-LIB_DIR="${PWD}/../../lib"
-LIB_CORE="${LIB_DIR}/lib-core.sh"
+# load lib-core.sh
+DIR=$(dirname $BASH_SOURCE)
+LIB_CORE="${DIR}/../lib/lib-core.sh"
 if [ ! -f ${LIB_CORE} ]; then
 	echo "ABORT: ${LIB_CORE} is missing"
 	exit
 fi
 . ${LIB_CORE}
 
-# include lib-install.sh
+# load lib-install
 import_file_or_abort ${LIB_INSTALL}
 
+# refresh sources
+sudo apt-get update
 
-INSTALL_DEPENDENCIES="proxy-deps.sh"
-import_file_or_abort ${INSTALL_DEPENDENCIES}
+# makepasswd - used for dongle keyfile generation
+# generates random passwords
+MAKEPASSWD="makepasswd"
+check_package_or_install ${MAKEPASSWD}
 
-
-# enable autologin
-# edit: 	sudo /etc/init/tty1.conf
-# replace line: exec /sbin/getty 38400 tty1
-# by: 		exec /sbin/rungetty --autologin USERNAME tty1
-
-# TODO: replace line code
-
-
-# disable sudo password prompt
-# this is totally insecure for the system but still... let's do it!
-# https://help.ubuntu.com/community/RootSudo#Remove_Password_Prompt_For_sudo
-# edit: 	sudo /etc/sudoers or sudo visudo
-# append line: 	<username> ALL=NOPASSWD: ALL
-
-# TODO: append line to file code
-
-
-# start usb otg gadget driver
-# edit:		.bashrc
-# append line:	sudo modprobe g_mass_storage <device>
-
-# TODO: append line to .bashrc of autologin user
-
-
-
-# create mount point for keystore
-
-# TODO: insert /dev/sdb /mnt/keystore into fstab
-echo "creating mount point for keystore"
-if [ ! -d ${KEYSTORE_MOUNT_POINT} ]; then
-	sudo mkdir ${KEYSTORE_MOUNT_POINT}
-fi
+# for creating vfat filesystem
+DOSFSTOOLS="dosfstools"
+check_package_or_install ${DOSFSTOOLS}

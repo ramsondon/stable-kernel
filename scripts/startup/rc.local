@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh -e
 #
 # Copyright (c) 2012-2015 Matthias Schmid <ramsondon@gmail.com>
 #
@@ -20,21 +20,6 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-# the core lib
+/bin/bash /lib/eproxy/proxy-startup.sh
 
-# imports a file or aborts
-function import_file_or_abort()
-{
-        if [ ! -f $1 ]; then
-                echo "ABORT: $1 not found"
-                exit
-        else
-                . $1
-        fi
-}
-
-
-# import shared configuration for all lib-core.sh users
-SHARED_CONFIG="${PWD}/../config.sh"
-import_file_or_abort ${SHARED_CONFIG} 
-
+exit 0

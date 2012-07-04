@@ -90,14 +90,10 @@ BUILD_UIMAGE=1
 ##WRONG: MMC=/dev/sde1
 ##CORRECT: MMC=/dev/sde
 
+# INSERT IF build_kernel.sh is called directly
 #MMC=/dev/sdc
-# included generic build config
-GENERIC_CONFIG="${PWD}/../config.sh"
-if [ ! -f ${GENERIC_CONFIG} ]; then
-	echo "ABORT: ${GENERIC_CONFIG} not found"
-	exit -1
-fi
-. ${GENERIC_CONFIG}
+MAIN_CONFIG="../config.sh"
+. ${MAIN_CONFIG}
 
 ###ADVANCED: Secret Sauce Patches:
 

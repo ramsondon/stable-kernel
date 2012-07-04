@@ -20,17 +20,56 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-# lib-startup.sh
 
 
-# @param $1 mapped target device file
-function start_mass_storage_driver()
-{
-	DEVICE=$1
-	DRIVER="g_mass_storage"
+# this script updates and installs all necessary sources for the encryption-proxy
 
-	# start mass storage module
-	modprobe ${DRIVER} file=${DEVICE} stall=n
-}
+unset SHARED_CONFIG
+
+echo "proxy/install proxy-deps.sh: $PWD"
+
+# load lib-core.sh
+LIB_DIR="$PWD/../../lib"
+SHARED_CONFIG="$PWD/../../config.sh"
+LIB_CORE="${LIB_DIR}/lib-core.sh"
+if [ ! -f ${LIB_CORE} ]; then
+	echo "ABORT: ${LIB_CORE} is missing"
+	exit
+fi
+. ${LIB_CORE}
+
+# load config.sh
+import_file_or_abort ${SHARED_CONFIG}
+
+# load lib-install.sh
+import_file_or_abort ${LIB_INSTALL}
+
+
+# Update Sources
+
+#sudo apt-get udpate
+#sudo apt-get install dist-upgrade
+
+# Autologin: http://wiki.ubuntuusers.de/Autologin
+# install rungetty
+RUNGETTY="rungetty"
+check_package_or_install ${RUNGETTY}
+
+
+# Auto-mounting: 
+# http://wiki.ubuntuusers.de/Daten_verschl%C3%BCsseln#luks
+
+#sudo apt-get install libpam-mount
+
+# Cryptsetup
+# http://wiki.centos.org/HowTos/EncryptedFilesystem
+CRYPTSETUP="cryptsetup"
+check_package_or_install ${CRYPTSETUP}
+
+
+# loop aes
+# https://www.shell-tips.com/2008/07/13/using-losetup-and-dd-to-secure-sensitive-data-encrypted-block-device/
+
+#sudo apt-get install loop-aes-utils
 
 

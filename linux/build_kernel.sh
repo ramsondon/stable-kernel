@@ -39,6 +39,7 @@ CCACHE=ccache
 
 DIR=$PWD
 
+
 CORES=1
 if test "-$ARCH-" = "-x86_64-" || test "-$ARCH-" = "-i686-"
 then
@@ -171,6 +172,7 @@ function patch_kernel {
 }
 
 function copy_defconfig {
+  echo "copy_defconfig: cur dir: ${DIR}"
   cd ${DIR}/KERNEL/
   make ARCH=arm CROSS_COMPILE=${CC} distclean
   make ARCH=arm CROSS_COMPILE=${CC} ${config}

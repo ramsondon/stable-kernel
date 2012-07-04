@@ -21,8 +21,10 @@
 # THE SOFTWARE.
 
 # main build configuration script
-
 unset MMC
+unset SOURCES
 
 MMC=/dev/sdc
-
+MMC1=${MMC}1
+MMC2=${MMC}2
+SOURCES="${DIR}/linux/proxy"

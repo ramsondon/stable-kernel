@@ -31,7 +31,7 @@
 # - implement encfs extension (where to pass the key for the dongle?)
 
 # lib-core.sh
-LIB_CORE="${PWD}/../lib/lib-core.sh"
+LIB_CORE="$(dirname $BASH_SOURCE)/../lib/lib-core.sh"
 if [ ! -f ${LIB_CORE} ]; then
 	echo "ABORT: ${LIB_CORE} not found"
 	exit
