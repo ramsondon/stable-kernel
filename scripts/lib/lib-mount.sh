@@ -58,6 +58,17 @@ function wait_for_umount()
 	done
 }
 
+# wait_until_not_busy
+#
+# @param $1 device
+function wait_until_not_busy()
+{
+	DEVICE=$1
+	while lsof | grep ${DEVICE} > /dev/null ; do
+		WAIT="until device is not busy"
+	done
+}
+
 # safe_mount
 #
 # waits until the device is mounted
@@ -88,6 +99,7 @@ function safe_umount()
 	DIR=$2
 	# if dir is mounted umount
 	if mount | grep ${DEVICE} > /dev/null ; then
+		wait_until_not_busy ${DEVICE}
 		echo "umount ${DEVICE}"
 		sudo umount ${DEVICE}
 		wait_for_umount ${DIR}
