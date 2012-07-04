@@ -25,8 +25,6 @@
 unset ROOTFS
 
 DIR=$PWD
-# include config.sh
-. config.sh
 
 # include proxy config-lib.sh
 CONFIG_LIB="${DIR}/scripts/lib/config-lib.sh"
@@ -35,6 +33,8 @@ CONFIG_LIB="${DIR}/scripts/lib/config-lib.sh"
 # include lib-core.sh
 . ${LIB_CORE}
 
+# include config.sh
+import_file_or_abort config.sh
 # include lib-mount.sh
 import_file_or_abort ${LIB_MOUNT}
 
@@ -127,21 +127,25 @@ fi
 install_cryptsetup ${ROOTFS}
 install_mkfs_vfat ${ROOTFS}
 
+echo "creating directory structures"
+sudo mkdir -p ${ROOTFS}${XM_LIB_DIR}/lib
+
 # copy startup scripts
 echo "copying ${SCRIPT_STARTUP} to ${XM_LIB_DIR}"
 cp ${SCRIPT_STARTUP} ${ROOTFS}${XM_LIB_DIR}
 
 # copy scripts/lib to /lib/eproxy/lib
-mkdir -p ${ROOTFS}${XM_LIB_DIR}/lib
-echo "copying ${LIB_DIR}* to ${XM_LIB_DIR}"
+echo "copying ${LIB_DIR}/* to ${XM_LIB_DIR}"
 cp  ${LIB_DIR}/* ${ROOTFS}${XM_LIB_DIR}/lib
 
 # copy rc.local to /etc/rc.local
 echo "copying rc.local to /etc/rc.local"
 cp ${SCRIPT_RC_LOCAL} ${ROOTFS}/etc/rc.local 
 
-
+cd ${CURRENT_DIR}
 # umount temp dir
 safe_umount ${MMC2} ${TEMPDIR}
+
 # clean up
+echo "removing ${TEMPDIR}"
 rm -rf ${TEMPDIR}
