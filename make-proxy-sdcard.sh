@@ -85,17 +85,17 @@ fi
 . ${GENERIC_CONFIG}
 
 echo "creating sdcard image"
-#setup_sdcard # working
+setup_sdcard # working
 echo "successfully created sdcard"
 
 echo "building kernel"
-#build_kernel # working
+build_kernel # working
 echo "successfully built kernel"
  
 echo "installing new kernel to sdcard"
-#copy_kernel_to_sdcard
+copy_kernel_to_sdcard # working
 echo "successfully copied new kernel"
 
 echo "setting up proxy"
-setup_proxy
+setup_proxy # working
 echo "FINISHED: encryption proxy ready to use."
