@@ -44,9 +44,10 @@ SCRIPT_STARTUP="${DIR}/scripts/startup/proxy-startup.sh"
 
 CRYPTSETUP="${DIR}/linux/proxy/cryptsetup"
 MKFS="${DIR}/linux/proxy/mkfs"
+LSOF="${DIR}/linux/proxy/lsof"
 
 # installs dependencies of cryptsetup
-# more less copies precomiled binaries to ROOTFS
+# more less copies precomiled sources to ROOTFS
 function install_cryptsetup()
 {
         ROOTFS=$1
@@ -59,7 +60,7 @@ function install_cryptsetup()
 }
 
 # installs dependencies of mkfs.vfat
-# more less copies precompiled binaries to ROOTFS
+# more less copies precompiled sources to ROOTFS
 function install_mkfs_vfat()
 {
         ROOTFS=$1
@@ -69,6 +70,103 @@ function install_mkfs_vfat()
 
         mkfs_copy ${ROOTFS}
         cd ${DIR}
+}
+
+# install precompiled sources of lsof to ROOTFS
+function install_lsof()
+{
+	ROOTFS=$1
+	echo "installing lsof"
+	cd ${LSOF}
+	. copy.sh
+	
+	lsof_copy ${ROOTFS}
+	cd ${DIR}
+}
+
+# create /lib/eproxy/lib
+function create_lib_dir()
+{
+	echo "creating directory structures"
+	mkdir -p ${ROOTFS}${XM_LIB_DIR}/lib
+}
+
+function install_startup_scripts()
+{
+	create_lib_dir
+
+	# copy startup scripts
+	echo "copying ${SCRIPT_STARTUP} to ${XM_LIB_DIR}"
+	cp ${SCRIPT_STARTUP} ${ROOTFS}${XM_LIB_DIR}
+
+	# copy scripts/lib to /lib/eproxy/lib
+	echo "copying ${LIB_DIR}/* to ${XM_LIB_DIR}"
+	cp  ${LIB_DIR}/* ${ROOTFS}${XM_LIB_DIR}/lib
+
+	# copy rc.local to /etc/rc.local
+	echo "copying rc.local to /etc/rc.local"
+	cp ${SCRIPT_RC_LOCAL} ${ROOTFS}/etc/rc.local 
+}
+
+function on_before_post_install()
+{
+	if [ ! -d ${TEMPDIR} ]; then
+        	mkdir -p ${TEMPDIR}
+	fi
+
+	echo "unmounting devices ${MMC1} and ${MMC2}..."
+	try_umount_device ${MMC1}
+	try_umount_device ${MMC2}
+
+	# mount rootfs
+	safe_mount ${MMC2} ${TEMPDIR}
+
+	# create mount point for keystore
+	echo "creating mount point for keystore"
+	if [ ! -d ${ROOTFS}${XM_KEYSTORE_MOUNT_POINT} ]; then
+		mkdir -p ${ROOTFS}${XM_KEYSTORE_MOUNT_POINT}
+	fi
+}
+
+function on_post_install()
+{
+	# FIXME: insert /dev/sdb /mnt/keystore into mtab
+	# At this time Start up script does the mount
+	# MTAB="${ROOTFS}/etc/mtab"
+	# MTAB_ENTRY="${XM_DONGLE_DEVICE} ${XM_KEYSTORE_MOUNT_POINT} vfat rw 0 0"
+	# echo ${MTAB_ENTRY} >> ${MTAB}
+
+	# copy precompiled sources
+	install_cryptsetup ${ROOTFS}
+	install_mkfs_vfat ${ROOTFS}
+	install_lsof ${ROOTFS}
+
+	# copy startup scripts
+	install_startup_scripts
+}
+
+function check_install()
+{
+	#if [ ! -d ${ROOTFS}${} ] ; then	
+	#fi
+	echo "checking installation..."
+}
+
+# umounts device and cleans up temporary directories
+function on_after_post_install()
+{
+	check_install
+	
+	# cd to current directory to unmount device and
+	# remove temporary mount point
+	cd ${CURRENT_DIR}
+
+	# umount temp dir
+	safe_umount ${MMC2} ${TEMPDIR}
+
+	# clean up
+	echo "removing ${TEMPDIR}"
+	rm -rf ${TEMPDIR}
 }
 
 
@@ -88,64 +186,10 @@ function install_mkfs_vfat()
 
 # TODO: append line to file code
 
-
-# start usb otg gadget driver
-# edit:		.bashrc
-# append line:	sudo modprobe g_mass_storage <device>
-
-# TODO: append line to .bashrc of autologin user
-
 unset TEMPDIR
 TEMPDIR="${DIR}/tmp"
-if [ ! -d ${TEMPDIR} ]; then
-        mkdir -p ${TEMPDIR}
-fi
-
-echo "unmounting devices ${MMC1} and ${MMC2}..."
-try_umount_device ${MMC1}
-try_umount_device ${MMC2}
-
-# mount rootfs
-safe_mount ${MMC2} ${TEMPDIR}
 ROOTFS=${TEMPDIR}
 
-# modify mmc
-
-# create mount point for keystore
-echo "creating mount point for keystore"
-if [ ! -d ${ROOTFS}${XM_KEYSTORE_MOUNT_POINT} ]; then
-	mkdir -p ${ROOTFS}${XM_KEYSTORE_MOUNT_POINT}
-fi
-
-# FIXME: insert /dev/sdb /mnt/keystore into mtab
-# At this time Start up script does the mount
-# MTAB="${ROOTFS}/etc/mtab"
-# MTAB_ENTRY="${XM_DONGLE_DEVICE} ${XM_KEYSTORE_MOUNT_POINT} vfat rw 0 0"
-# echo ${MTAB_ENTRY} >> ${MTAB}
-
-# copy cryptsetup sources and mkfs.vfat
-install_cryptsetup ${ROOTFS}
-install_mkfs_vfat ${ROOTFS}
-
-echo "creating directory structures"
-sudo mkdir -p ${ROOTFS}${XM_LIB_DIR}/lib
-
-# copy startup scripts
-echo "copying ${SCRIPT_STARTUP} to ${XM_LIB_DIR}"
-cp ${SCRIPT_STARTUP} ${ROOTFS}${XM_LIB_DIR}
-
-# copy scripts/lib to /lib/eproxy/lib
-echo "copying ${LIB_DIR}/* to ${XM_LIB_DIR}"
-cp  ${LIB_DIR}/* ${ROOTFS}${XM_LIB_DIR}/lib
-
-# copy rc.local to /etc/rc.local
-echo "copying rc.local to /etc/rc.local"
-cp ${SCRIPT_RC_LOCAL} ${ROOTFS}/etc/rc.local 
-
-cd ${CURRENT_DIR}
-# umount temp dir
-safe_umount ${MMC2} ${TEMPDIR}
-
-# clean up
-echo "removing ${TEMPDIR}"
-rm -rf ${TEMPDIR}
+on_before_post_install
+on_post_install
+on_after_post_install

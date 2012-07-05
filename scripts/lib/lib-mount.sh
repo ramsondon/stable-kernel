@@ -55,6 +55,18 @@ function wait_until_not_busy()
 	done
 }
 
+# is_device
+#
+# @param $1 device
+function is_device()
+{
+	DEVICE=$1
+	if [ ! -f ${DEVICE} ] ; then
+		return 0
+	fi
+	return 1
+}
+
 # try_umount_device
 #
 # umounts a device if mounted 
@@ -64,7 +76,7 @@ function try_umount_device()
 {
 	DEVICE=$1
 	if mount | grep ${DEVICE} > /dev/null ; then
-		wait_until_not_busy
+		#wait_until_not_busy
 		echo "umount ${DEVICE}"
 		sudo umount ${DEVICE}
 	fi 

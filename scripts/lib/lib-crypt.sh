@@ -49,4 +49,16 @@ function create_temporary_device_mapper()
         cryptsetup luksOpen ${DEVICE} ${DEV_MAPPER_NAME} --key-file=${KEYFILE}
 }
 
+# is_luks_device
+#
+# @param $1 device
+function is_luks_device()
+{
+	DEVICE=$1
+	if cryptsetup luksUUID ${DEVICE} ; then
+		return 1
+	fi
+	return 0
+}
+
 

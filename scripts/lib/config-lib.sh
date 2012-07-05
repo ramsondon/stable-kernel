@@ -55,4 +55,4 @@ XM_ENCRYPTED_DEVICE="dev/mapper/${DEVICE_MAPPER_NAME}"
 
 XM_KEY_FILE=".dongle.key"
 XM_KEYSTORE_MOUNT_POINT="/mnt/keystore"
-XM_LIB_DIR="/lib/eproxy"
+XM_LIB_DIR="/eproxy"

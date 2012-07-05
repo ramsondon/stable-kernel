@@ -32,3 +32,27 @@ function import_file_or_abort()
                 . $1
         fi
 }
+
+function print_msg()
+{
+	PREFIX="$1"
+	MSG="$2"
+	LOG_FILE="$3"
+	echo "${PREFIX} ${MSG}" >> ${LOG_FILE}
+}
+
+function print_log()
+{
+	MSG="$1"
+	LOG_FILE="$2"
+	DATE=$(date)
+	print_msg "LOG: ${DATE}: " "${MSG}" "${LOG_FILE}"
+}
+
+function print_err()
+{
+	MSG="$1"
+	LOG_FILE="$2"
+	DATE=$(date)
+	print_msg "ERR: ${DATE}: " "${MSG}" "${LOG_FILE}"
+}
