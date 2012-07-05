@@ -12,8 +12,7 @@ This preconfigured Kernel is for using your BeagleBoard as an encryption proxy f
 3.2.21-encryption-proxy
 
 
-Creating your 2.3.21-encryption-proxy for BeagleBoard-xM
-________________________________________________________
+### Creating your 2.3.21-encryption-proxy for BeagleBoard-xM_
 
 
 1. insert your mmc device to your host computer
