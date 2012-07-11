@@ -23,6 +23,7 @@
 # main build configuration script
 unset MMC
 unset SOURCES
+LINUX_GIT=~/develop/linux-stable/
 
 MMC=/dev/sdc
 MMC1=${MMC}1
