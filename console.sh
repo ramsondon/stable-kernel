@@ -79,7 +79,7 @@ function setup_sdcard()
 {
 	echo "creating sdcard image"
 	cd ${DIR_UBUNTU}
-	/bin/bash ${SCRIPT_SETUP_SDCARD} --mmc ${MMC} --uboot beagle_xm
+	sudo /bin/bash ${SCRIPT_SETUP_SDCARD} --mmc ${MMC} --uboot beagle_xm
 	echo "successfully created sdcard"
 }
 
