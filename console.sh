@@ -63,7 +63,7 @@ function build_kernel()
 {
 	echo "building kernel..."
 	cd ${DIR_KERNEL}
-	sudo /bin/bash ${SCRIPT_BUILD_KERNEL}
+	/bin/bash ${SCRIPT_BUILD_KERNEL}
 	echo "kernel built successfully"
 }
 
@@ -71,7 +71,7 @@ function copy_kernel_to_sdcard()
 {	
 	echo "installing kernel..."
 	cd ${DIR_KERNEL}
-	sudo /bin/bash ${SCRIPT_INSTALL_IMAGE}
+	/bin/bash ${SCRIPT_INSTALL_IMAGE}
 	echo "kernel installed successfully"
 }
 
@@ -79,7 +79,7 @@ function setup_sdcard()
 {
 	echo "creating sdcard image"
 	cd ${DIR_UBUNTU}
-	sudo /bin/bash ${SCRIPT_SETUP_SDCARD} --mmc ${MMC} --uboot beagle_xm
+	/bin/bash ${SCRIPT_SETUP_SDCARD} --mmc ${MMC} --uboot beagle_xm
 	echo "successfully created sdcard"
 }
 
@@ -87,7 +87,7 @@ function setup_proxy()
 {
 	echo "installing proxy..."
 	cd ${CURRENT_DIR}
-	sudo /bin/bash ${SCRIPT_PROXY_INSTALL}
+	/bin/bash ${SCRIPT_PROXY_INSTALL}
 	echo "proxy installed successfully"
 }
 
