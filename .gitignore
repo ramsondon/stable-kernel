@@ -9,6 +9,7 @@ GFX_*_libs.tar.gz
 GFX_Linux_SDK.tar.gz
 OMAP35x_Graphics_SDK_setuplinux_*.bin
 Graphics_SDK_setuplinux_*.bin
+linux/KERNEL
 linux/patches/patch-*.bz2
 linux/patches/current_defconfig
 linux/patches/previous_defconfig
