@@ -87,7 +87,7 @@ function setup_proxy()
 {
 	echo "installing proxy..."
 	cd ${CURRENT_DIR}
-	/bin/bash ${SCRIPT_PROXY_INSTALL}
+	sudo /bin/bash ${SCRIPT_PROXY_INSTALL}
 	echo "proxy installed successfully"
 }
 
@@ -141,7 +141,7 @@ function echo_help()
 	echo $'\t\t'${CMD_QUIT}
 	echo ""
 	echo $'\t'"<options>"
-	echo $'\t\t'${OPTION_MMC} "<device>"$'\t'"the mmc device (e.g. /dev/sdb)"
+	echo $'\t\t'${OPTION_MMC} "<device>"$'\t'"the mmc device (e.g. /dev/sdc)"
 }
 
 # interpretes commands given to console
