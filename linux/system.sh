@@ -1,0 +1,118 @@
+#!/bin/bash
+#copy as "system.sh" and tweak for your system
+
+ARCH=$(uname -m)
+
+###ADVANCED, OPTIONAL: gcc version override (useful for gcc/kernel regressions)
+#GCC_OVERRIDE="gcc-4.4"
+
+if [ "x${ARCH}" == "xarmv7l" ] ; then
+ echo "Using: Native armv7l gcc Compiler"
+ CC=
+else
+ echo "Using: Cross Compiler"
+ CC=arm-linux-gnueabi-
+
+ #Test that user actually modified the above CC line:
+ if [ "-${CC}-" == "--" ] ; then
+  echo ""
+  echo "Error: You haven't setup the Cross Compiler (CC variable) in system.sh"
+  echo ""
+  echo "with a (sane editor) open system.sh and modify the commented Line 14: #CC=arm-linux-gnueabi-"
+  echo ""
+  echo "If you need hints on installing an ARM GCC Cross ToolChain, view README file"
+  echo ""
+  exit
+ fi
+
+	GCC="gcc"
+	if [ "x${GCC_OVERRIDE}" != "x" ] ; then
+		GCC="${GCC_OVERRIDE}"
+	fi
+
+	GCC_TEST=$(LC_ALL=C ${CC}${GCC} -v 2>&1 | grep "Target:" | grep arm || true)
+	GCC_REPORT=$(LC_ALL=C ${CC}${GCC} -v 2>&1 || true)
+
+ if [ "-${GCC_TEST}-" == "--" ] ; then
+  echo ""
+  echo "Error: The GCC ARM Cross Compiler you setup in system.sh (CC variable)."
+  echo "Doesn't seem to be valid for ARM, double check it's location, or that"
+  echo "you chose the correct GCC Cross Compiler."
+  echo ""
+	echo "Output of: ${CC}${GCC} -v"
+  echo "${GCC_REPORT}"
+  echo ""
+  exit
+ fi
+fi
+
+###REQUIRED:
+
+##Linux Kernel Source location:
+##
+##To Setup: using git, you need to clone the linux-stable git tree from kernel.org
+##to anywhere in your system, just adjust LINUX_GIT variable..
+##
+###Note: (In Most systems ~/ is /home/username/)
+##cd ~/
+##git clone git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git
+
+
+# insert if new sources are required
+# LINUX_GIT=~/develop/linux-stable/
+
+
+
+###OPTIONAL: (REQUIRED FOR RUNNING: ./tools/load_uImage.sh & ./tools/load_uImage.sh)
+
+##Since 2.6.39?, it's now possible to build a Linux Kernel for devices that have
+##different physical address of the kernel entry point or "ZRELADDR".  This also means
+##these scripts only create zImage's, if you'd like uImage, run mkimage yourself, or use
+##the ./tools/load_uImage.sh to load the uImage on a MMC card.
+
+##For TI: OMAP3/4/AM35xx
+ZRELADDR=0x80008000
+
+##For Freescale:
+##MX51 Family
+#ZRELADDR=0x90008000
+
+##MX53
+#ZRELADDR=0x70008000
+
+###ADVANCED: Allow the script to build uImage's directly, so-far safe for TI OMAP, but not Freescale..
+BUILD_UIMAGE=1
+
+###OPTIONAL: (REQUIRED FOR RUNNING: ./tools/load_uImage.sh & ./tools/load_uImage-net.sh)
+##Note: This operates on raw disks, NOT PARTITIONS
+##WRONG: MMC=/dev/mmcblk0p1
+##CORRECT: MMC=/dev/mmcblk0
+##WRONG: MMC=/dev/sde1
+##CORRECT: MMC=/dev/sde
+
+# INSERT IF build_kernel.sh is called directly
+#MMC=/dev/sdc
+MAIN_CONFIG="../config.sh"
+if [ ! -f ${MAIN_CONFIG} ]; then
+	echo "linux system.sh: could not include main config"
+	exit
+fi
+. ${MAIN_CONFIG}
+
+###ADVANCED: Secret Sauce Patches:
+
+##Have some secret sauce, you dont want to share with the community??
+##
+##It'll look specifically for *.patch files... Doesn't care about order/etc.. And I don't care about enhancing it.. ;)
+
+#LOCAL_PATCH_DIR=/full/path/to/dir/
+
+###ADVANCED: Pull in Torvalds current master tree before applying local patchset
+#This is very useful during an intial 'rc0' merge.
+#It is never supported... Enable at your own risk
+#LATEST_GIT=1
+
+###ADVANCED: enable DEBUG_SECTION_MISMATCH
+#http://cateee.net/lkddb/web-lkddb/DEBUG_SECTION_MISMATCH.html
+#DEBUG_SECTION=1
+
