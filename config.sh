@@ -23,9 +23,9 @@
 # main build configuration script
 unset MMC
 unset SOURCES
-LINUX_GIT=~/fhv/masterthesis/linux-stable/
+LINUX_GIT=~/fhv/masterthesis/encryption-proxy/linux-stable
 
 MMC=/dev/sdc
 MMC1=${MMC}1
 MMC2=${MMC}2
-SOURCES="${DIR}/linux/proxy"
+SOURCES="${DIR}/binaries"
