@@ -234,7 +234,8 @@ function run_console()
 # include generic build config
 if [ ! -f ${GENERIC_CONFIG} ]; then
 	echo "ABORT: ${GENERIC_CONFIG} not found"
-	exit -1
+	echo "Copy config.sample.sh to config.sh and modify it to your needs"
+	exit 1
 fi
 . ${GENERIC_CONFIG}
 
