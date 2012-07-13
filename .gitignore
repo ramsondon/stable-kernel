@@ -1,5 +1,6 @@
 dl
 linux/deploy
+config.sh
 scripts/tests
 scripts/ignore
 SDK
