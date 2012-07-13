@@ -12,9 +12,16 @@ This preconfigured Kernel is for using your BeagleBoard as an encryption proxy f
 3.2.21-encryption-proxy
 
 
-### Creating your 2.3.21-encryption-proxy for BeagleBoard-xM_
+### Creating your 2.3.21-encryption-proxy for BeagleBoard-xM
 
 
 1. insert your mmc device to your host computer
-2. check which device (e.g. /dev/sdb) is your mmc (e.g with dmesg)
-3. start console.sh and follow instructions
+2. check which device (e.g. /dev/sdc) is your mmc (e.g with dmesg)
+3. copy config.sample.sh to config.sh
+	3.1 uncomment LINUX_GIT (offical linux sources) and modify path to your needs
+	3.2 uncomment MMC and modify to the SDCARD device (e.g. /dev/sdc)
+4. start console.sh and follow instructions
+	4.1 execute console with command install:all --mmc <device>
+	you can also build the encryption proxy step by step using the console.sh
+
+
