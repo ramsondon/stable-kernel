@@ -15,10 +15,11 @@ This Linux Version is for using your BeagleBoard as an encryption proxy for port
 ### Creating your 2.3.xx-encryption-proxy for BeagleBoard-xM
 
 
-1. insert your mmc device to your host computer
+<ul>
+<li>insert your mmc device to your host computer</li>
 
-2. check which device (e.g. /dev/sdc) is your mmc (e.g with dmesg)
-
+<li>check which device (e.g. /dev/sdc) is your mmc (e.g with dmesg)</li>
+<ul>
 3. copy config.sample.sh to config.sh
 * uncomment LINUX_GIT (offical linux sources) and modify path to your needs
 * uncomment MMC and modify to the SDCARD device (e.g. /dev/sdc)
