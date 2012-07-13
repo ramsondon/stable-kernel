@@ -196,7 +196,15 @@ function create_luks_device()
 	DEVICE=$1
 	write_log "LUKS formatting ${DEVICE}..."
 	# LUKS format device 
-	cryptsetup luksFormat ${DEVICE} --key-file=${XM_KEY_FILE} > YES
+
+# ATTENTION: the following three lines MUST NOT have an indent
+# cryptsetup luksFormat ${DEVICE} --key-file=${XM_KEY_FILE} << EOF
+# YES 
+# EOF
+# to automatically answer to the LUKS format prompt: YES
+cryptsetup luksFormat ${DEVICE} --key-file=${XM_KEY_FILE} << EOF
+YES 
+EOF
 	
 	# open luks device
         open_luks_device ${XM_STORAGE_DEVICE} ${XM_DEVICE_MAPPER_NAME} ${XM_KEY_FILE}
