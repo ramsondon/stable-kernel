@@ -33,7 +33,7 @@ This Linux Version is for using your BeagleBoard as an encryption proxy for port
 
 4.1.1.1 init:mmc
 
-4.1.1.2 build:kernel (at this time add USB OTG Support -> Mass Storage to menuconfig)
+4.1.1.2 build:kernel (at this time add USB OTG Gadget Support -> Mass Storage Gadget to menuconfig)
 
 4.1.1.3 install:kernel
 
