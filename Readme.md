@@ -20,25 +20,20 @@ This Linux Version is for using your BeagleBoard as an encryption proxy for port
 2. check which device (e.g. /dev/sdc) is your mmc (e.g with dmesg)
 
 3. copy config.sample.sh to config.sh
-
-uncomment LINUX_GIT (offical linux sources) and modify path to your needs
-
-uncomment MMC and modify to the SDCARD device (e.g. /dev/sdc)
+* uncomment LINUX_GIT (offical linux sources) and modify path to your needs
+* uncomment MMC and modify to the SDCARD device (e.g. /dev/sdc)
 
 4. start console.sh and follow instructions
-
 * execute console with command install:all --mmc <device>
 * you can also build the encryption proxy step by step using the console.sh. required steps for a working encryption proxy are:
-
-** init:mmc
-** build:kernel (at this time add USB OTG Gadget Support -> Mass Storage Gadget to menuconfig)
-** install:kernel
-** install:proxy
+* init:mmc
+* build:kernel (at this time add USB OTG Gadget Support -> Mass Storage Gadget to menuconfig)
+* install:kernel
+* install:proxy
 
 5. after finishing all steps insert SDCARD to your BeagleBoard-xM
 
 6. insert USB device into your Host computer and execute create-dongle.sh
-
 * if this does not work execute dongle-install.sh to install all dependencies need for the dongle creation and execute create-dongle.sh again. 
 
 7. insert Storage device into USB slot Host 1
