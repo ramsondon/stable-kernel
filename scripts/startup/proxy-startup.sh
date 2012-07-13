@@ -22,39 +22,16 @@
 
 # This is the startup script for the encryption proxy.
 
-# encryption proxy library path
-#unset LIB_DIR
-#unset LIB_CONFIG
-#unset LIB_CORE
-#unset LIB_CRYPT
-#unset LIB_MOUNT
-#unset LIB_STARTUP
-
 unset LOG_FILE
 
-#LIB_DIR="/eproxy/lib"
-#LIB_CONFIG="${LIB_DIR}/config-lib.sh"
-#LIB_CORE="${LIB_DIR}/lib-core.sh"
-#LIB_CRYPT="${LIB_DIR}/lib-crypt.sh"
-#LIB_MOUNT="${LIB_DIR}/lib-mount.sh"
-#LIB_STARTUP="${LIB_DIR}/lib-startup.sh"
+unset XM_STORAGE_DEVICE
+unset XM_DONGLE_DEVICE
+unset XM_DEVICE_MAPPER_NAME
+unset XM_ENCRYPTED_DEVICE
+unset XM_KEYSTORE_MOUNT_POINT
+unset XM_KEY_FILE
 
 LOG_FILE="/eproxy/boot.log"
-
-#include config-lib.sh
-#. ${LIB_CONFIG}
-
-# include lib-core.sh
-#. ${LIB_CORE}
-
-# include lib-startup.sh
-#. ${LIB_STARTUP}
-
-# include lib-mount.sh
-#. ${LIB_MOUNT}
-
-# include lib-crypt.sh
-#. ${LIB_CRYPT}
 
 # BeagleBoard-xM device variables
 XM_STORAGE_DEVICE="/dev/sda"
@@ -64,12 +41,17 @@ XM_ENCRYPTED_DEVICE="dev/mapper/${XM_DEVICE_MAPPER_NAME}"
 
 XM_KEYSTORE_MOUNT_POINT="/mnt/keystore"
 XM_KEY_FILE="${XM_KEYSTORE_MOUNT_POINT}/.dongle.key"
-#XM_LIB_DIR="/eproxy"
+
 
 
 # ************************** PROXY BOOT SEQUENCE *******************************
 # at this point the device mapper named encryption-storage must already exist
 
+# print_msg
+#
+# @param $1 the log prefix
+# @param $2 the message
+# @param $3 the log file name
 function print_msg()
 {
         PREFIX="$1"
@@ -78,6 +60,10 @@ function print_msg()
         echo "${PREFIX} ${MSG}" >> ${LOG_FILE}
 }
 
+# print_log
+#
+# @param $1 the message
+# @param $2 the log file name
 function print_log()
 {
         MSG="$1"
@@ -86,6 +72,10 @@ function print_log()
         print_msg "LOG: ${DATE}: " "${MSG}" "${LOG_FILE}"
 }
 
+# print_err
+# 
+# @param $1 the message
+# @param $2 the log file name
 function print_err()
 {
         MSG="$1"
@@ -94,13 +84,18 @@ function print_err()
         print_msg "ERR: ${DATE}: " "${MSG}" "${LOG_FILE}"
 }
 
-
+# write_log
+# 
+# @param $1 the message
 function write_log()
 {
 	MSG="$1"
 	print_log "${MSG}" "${LOG_FILE}" 
 }
 
+# write_err
+#
+# @param $1 the message
 function write_err()
 {
 	MSG="$1"
@@ -142,13 +137,14 @@ function safe_mount()
         DIR=$2
         # if dir is not mounted mount
         if ! mount | grep ${DIR} > /dev/null ; then
-                echo "mount ${DEVICE}"
+                write_log "mount ${DEVICE}"
                 sudo mount ${DEVICE} ${DIR}
                 wait_for_mount ${DIR}
         fi
 }
 
-
+# mount_dongle
+#
 function mount_dongle()
 {
 	write_log "checking dongle ${XM_DONGLE_DEVICE}"
@@ -177,6 +173,8 @@ function is_luks_device()
         return 1
 }
 
+# create_luks_device
+#
 function create_luks_device()
 {
 	write_log "in func create_luks_device"
@@ -187,7 +185,7 @@ function create_luks_device()
 # @param $1 target device
 # @param $2 mapping name
 # @param $3 key file
-function create_temporary_device_mapper()
+function open_luks_device()
 {
         DEVICE=$1               # /dev/sda
         DEV_MAPPER_NAME=$2      # encryption-storage
@@ -209,9 +207,9 @@ function start_mass_storage_driver()
 }
 
 
-# ********************************************************************************
-# **************************************** START SCRIPT **************************
-# ********************************************************************************
+# ******************************************************************************
+# **************************************** START SCRIPT ************************
+# ******************************************************************************
 
 write_log "booting encryption proxy"
 
@@ -228,12 +226,8 @@ if ! is_luks_device ${XM_STORAGE_DEVICE} ; then
 fi
 
 # open luks device
-write_log "creating temporary device mapper"
-create_temporary_device_mapper ${XM_STORAGE_DEVICE} ${XM_DEVICE_MAPPER_NAME} ${XM_KEY_FILE}
-
+open_luks_device ${XM_STORAGE_DEVICE} ${XM_DEVICE_MAPPER_NAME} ${XM_KEY_FILE}
 
 # starts usb otg gadget driver as a mass storage
 write_log "starting mass storage driver at ${XM_ENCRYPTED_DEVICE}"
 start_mass_storage_driver ${XM_ENCRYPTED_DEVICE}
-
-write_log "successfully booted all components"
