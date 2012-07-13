@@ -38,13 +38,13 @@ import_file_or_abort config.sh
 # include lib-mount.sh
 import_file_or_abort ${LIB_MOUNT}
 
-
 SCRIPT_RC_LOCAL="${DIR}/scripts/startup/rc.local"
+#CRIPT_RC_LOCAL="${DIR}/scripts/startup/S99eproxy"
 SCRIPT_STARTUP="${DIR}/scripts/startup/proxy-startup.sh"
 
-CRYPTSETUP="${DIR}/linux/proxy/cryptsetup"
-MKFS="${DIR}/linux/proxy/mkfs"
-LSOF="${DIR}/linux/proxy/lsof"
+CRYPTSETUP="${SOURCES}/cryptsetup"
+MKFS="${SOURCES}/mkfs"
+LSOF="${SOURCES}/lsof"
 
 # installs dependencies of cryptsetup
 # more less copies precomiled sources to ROOTFS
@@ -93,19 +93,27 @@ function create_lib_dir()
 
 function install_startup_scripts()
 {
-	create_lib_dir
+	#create_lib_dir
 
 	# copy startup scripts
 	echo "copying ${SCRIPT_STARTUP} to ${XM_LIB_DIR}"
 	cp ${SCRIPT_STARTUP} ${ROOTFS}${XM_LIB_DIR}
 
 	# copy scripts/lib to /lib/eproxy/lib
-	echo "copying ${LIB_DIR}/* to ${XM_LIB_DIR}"
-	cp  ${LIB_DIR}/* ${ROOTFS}${XM_LIB_DIR}/lib
+	#echo "copying ${LIB_DIR}/* to ${XM_LIB_DIR}"
+	#cp  ${LIB_DIR}/* ${ROOTFS}${XM_LIB_DIR}/lib
 
 	# copy rc.local to /etc/rc.local
 	echo "copying rc.local to /etc/rc.local"
 	cp ${SCRIPT_RC_LOCAL} ${ROOTFS}/etc/rc.local 
+	
+	# copy S99eproxy to /etc/rcS.d
+	#cp ${SCRIPT_RC_LOCAL} ${ROOTFS}/etc/init.d/eproxy
+	#chmod +x ${ROOTFS}/etc/init.d/eproxy
+	#local DIR=${PWD}
+	#cd ${ROOTFS}/etc/rcS.d
+	#ln -s ../init.d/eproxy S99eproxy
+	#cd ${DIR}
 }
 
 function on_before_post_install()
@@ -172,7 +180,7 @@ function on_after_post_install()
 
 # enable autologin
 # edit: 	sudo /etc/init/tty1.conf
-# replace line: exec /sbin/getty 38400 tty1
+# replace line: exec /sbin/getty -8 38400 tty1
 # by: 		exec /sbin/rungetty --autologin USERNAME tty1
 
 # TODO: replace line code
