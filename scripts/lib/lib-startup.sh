@@ -22,7 +22,8 @@
 
 # lib-startup.sh
 
-
+# start_mass_storage_driver
+#
 # @param $1 mapped target device file
 function start_mass_storage_driver()
 {
@@ -32,5 +33,4 @@ function start_mass_storage_driver()
 	# start mass storage module
 	modprobe ${DRIVER} file=${DEVICE} stall=n
 }
-
 

@@ -61,10 +61,12 @@ function wait_until_not_busy()
 function is_device()
 {
 	DEVICE=$1
-	if [ ! -f ${DEVICE} ] ; then
-		return 0
+	if [ ! -e ${DEVICE} ] ; then
+		echo "${DEVICE} is not available" >> /eproxy/boot.log
+		return 1
 	fi
-	return 1
+	echo "${DEVICE} is ready to mount" >> /eproxy/boot.log
+	return 0
 }
 
 # try_umount_device

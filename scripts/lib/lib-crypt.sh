@@ -36,7 +36,8 @@ function create_device_mapper()
 	sudo echo ${TABLE_ENTRY} > ${CRYPT_TABLE}
 }
 
-
+# create_temporary_device_mapper
+#
 # @param $1 target device
 # @param $2 mapping name
 # @param $3 key file
@@ -56,9 +57,8 @@ function is_luks_device()
 {
 	DEVICE=$1
 	if cryptsetup luksUUID ${DEVICE} ; then
-		return 1
+		return 0
 	fi
-	return 0
+	return 1
 }
-
 
