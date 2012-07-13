@@ -23,9 +23,27 @@
 # main build configuration script
 unset MMC
 unset SOURCES
-LINUX_GIT=~/fhv/masterthesis/encryption-proxy/linux-stable
 
-MMC=/dev/sdc
-MMC1=${MMC}1
-MMC2=${MMC}2
+# The Linux Source directory for building the kernel
+#
+# cd ~/
+# get it via: git clone git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git
+# uncomment the following line
+## LINUX_GIT=~/linux-stable
+
+# Set your mmc device
+# You are pleased to set this variable to your correct device
+# or use the --mmc option flag in your console.sh
+# uncomment the following three lines
+##MMC=/dev/sdc
+##MMC1=${MMC}1
+##MMC2=${MMC}2
+
+# This varibale must be set for the binaries direcotry
+# DO not adjust it as long you do not rename the directory
+#
+# include binaries are:
+#			cryptsetup
+#			lsof
+#			mkdosfs
 SOURCES="${DIR}/binaries"
