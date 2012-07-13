@@ -148,15 +148,17 @@ function safe_mount()
 function mount_dongle()
 {
 	write_log "checking dongle ${XM_DONGLE_DEVICE}"
+	while ! is_device "${XM_DONGLE_DEVICE}" ; do
+		DONGLE_ATTACHED="true"
+	done
 	if is_device "${XM_DONGLE_DEVICE}" ; then
-		write_log "${XM_DONGLE_DEVICE} exists"
-	else
-		write_err "${XM_DONGLE_DEVICE} does not exist"
-		exit 0
+		write_log "${XM_DONGLE_DEVICE} exists"	
+		write_log "mounting dongle"
+		safe_mount ${XM_DONGLE_DEVICE} ${XM_KEYSTORE_MOUNT_POINT}
+		return 0
 	fi
-
-	write_log "mounting dongle"
-	safe_mount ${XM_DONGLE_DEVICE} ${XM_KEYSTORE_MOUNT_POINT}
+	write_err "${XM_DONGLE_DEVICE} does not exist"
+	return 1
 }
 
 # is_luks_device
@@ -173,14 +175,7 @@ function is_luks_device()
         return 1
 }
 
-# create_luks_device
-#
-function create_luks_device()
-{
-	write_log "in func create_luks_device"
-}
-
-# create_temporary_device_mapper
+# open_luks_device
 #
 # @param $1 target device
 # @param $2 mapping name
@@ -192,6 +187,21 @@ function open_luks_device()
         KEYFILE=$3              # /mnt/keystore/.dongle.key
 	write_log "open LUKS device ${DEVICE} ${DEV_MAPPER_NAME} with key: ${KEYFILE}"
         cryptsetup luksOpen ${DEVICE} ${DEV_MAPPER_NAME} --key-file=${KEYFILE}
+}
+
+# create_luks_device
+#
+function create_luks_device()
+{
+	DEVICE=$1
+	write_log "LUKS formatting ${DEVICE}..."
+	# LUKS format device 
+	cryptsetup luksFormat ${DEVICE} --key-file=${XM_KEY_FILE} > YES
+	
+	# open luks device
+        open_luks_device ${XM_STORAGE_DEVICE} ${XM_DEVICE_MAPPER_NAME} ${XM_KEY_FILE}
+	# create filesystem on mapped device
+	mkfs.vfat ${XM_ENCRYPTED_DEVICE}
 }
 
 # start_mass_storage_driver
@@ -208,14 +218,15 @@ function start_mass_storage_driver()
 
 
 # ******************************************************************************
-# **************************************** START SCRIPT ************************
+# ******************************** EXECUTE START SCRIPT ************************
 # ******************************************************************************
 
 write_log "booting encryption proxy"
 
 # mount dongle
-mount_dongle
-
+while ! mount_dongle ; do
+	MOUNT_DONGLE_ACTION="not succeeded"
+done
 
 # check if device is luks formated with "cryptsetup luksUUID"
 write_log "check luks device"
@@ -223,10 +234,11 @@ if ! is_luks_device ${XM_STORAGE_DEVICE} ; then
 	write_log "${XM_STORAGE_DEVICE} is not a valid LUKS device"
 	write_log "start LUKS formatting disk..."
 	create_luks_device ${XM_STORAGE_DEVICE} ${XM_KEY_FILE}
+else
+	# open luks device
+	open_luks_device ${XM_STORAGE_DEVICE} ${XM_DEVICE_MAPPER_NAME} ${XM_KEY_FILE}
 fi
 
-# open luks device
-open_luks_device ${XM_STORAGE_DEVICE} ${XM_DEVICE_MAPPER_NAME} ${XM_KEY_FILE}
 
 # starts usb otg gadget driver as a mass storage
 write_log "starting mass storage driver at ${XM_ENCRYPTED_DEVICE}"
