@@ -16,6 +16,7 @@ This Linux Version is for using your BeagleBoard as an encryption proxy for port
 
 <style type="text/css">
 ul, li {list-style: none;}
+ul {color:red;}
 </style>
 
 <ul>
