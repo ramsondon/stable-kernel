@@ -15,7 +15,7 @@ This Linux Version is for using your BeagleBoard as an encryption proxy for port
 ### Creating your 2.3.xx-encryption-proxy for BeagleBoard-xM
 
 <ul style="color:red;">
-<li>insert your mmc device to your host computer</li>
+<li style="color:red;">insert your mmc device to your host computer</li>
 
 <li>check which device (e.g. /dev/sdc) is your mmc (e.g with dmesg)</li>
 
