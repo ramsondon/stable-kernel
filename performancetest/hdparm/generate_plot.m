@@ -22,29 +22,22 @@
 
 
 % plots a hdparm csv graphic
-function generate_plot(logfile)
-filename = logfile;
-tit = 'Host Computer direct USB access';
+function generate_plot(logfile, plotname, tit)
+	
+	% read in logfile csv
+	raw = dlmread(logfile, ';', 0,0); 
+	data = raw(:,1:4);
+	x = data(:,1);
+	y = data(:,4);
+	% plot x: nr of test
+	% plot y: MB/s
+	grid on;
+	title(tit);
+	xlabel("Test");
+	ylabel("MB/s");
+	plot(x,y,'r')
 
-
-raw = dlmread(filename, ';', 0,0); 
-data = raw(:,1:4);
-
-hold on;
-x = data(:,1);
-y = data(:,4);
-
-title(tit);
-xlabel("Test");
-ylabel("MB/s");
-
-plot(x,y,'r')
-
-
-hold off;
-
-%semilogy(data(:,3)', data(:,2)', 'r');
-
-%hold on;
+	% save as eps vectorized graphic
+	print(gcf,'-depsc2','-r300',plotname);
 
 endfunction
