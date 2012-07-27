@@ -1,0 +1,300 @@
+
+/dev/sdb:
+ Timing buffered disk reads:  14 MB in  3.45 seconds =   4.06 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  24 MB in  3.13 seconds =   7.67 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  32 MB in  3.01 seconds =  10.62 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  40 MB in  3.33 seconds =  12.02 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  46 MB in  3.20 seconds =  14.35 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  50 MB in  3.20 seconds =  15.64 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  52 MB in  3.01 seconds =  17.26 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  56 MB in  3.31 seconds =  16.89 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  58 MB in  3.35 seconds =  17.32 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  60 MB in  3.43 seconds =  17.47 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  62 MB in  3.51 seconds =  17.65 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  62 MB in  3.01 seconds =  20.57 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  62 MB in  3.02 seconds =  20.51 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  66 MB in  3.42 seconds =  19.29 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  68 MB in  3.05 seconds =  22.26 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  70 MB in  3.12 seconds =  22.42 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  72 MB in  3.22 seconds =  22.38 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  74 MB in  3.28 seconds =  22.58 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  76 MB in  3.38 seconds =  22.51 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  78 MB in  3.45 seconds =  22.61 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  76 MB in  3.07 seconds =  24.77 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  62 MB in  3.02 seconds =  20.53 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  62 MB in  3.05 seconds =  20.32 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  64 MB in  3.08 seconds =  20.76 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  62 MB in  3.00 seconds =  20.63 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  62 MB in  3.01 seconds =  20.62 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  62 MB in  3.03 seconds =  20.46 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  64 MB in  3.10 seconds =  20.67 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  62 MB in  3.02 seconds =  20.52 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  62 MB in  3.02 seconds =  20.54 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  78 MB in  3.05 seconds =  25.59 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  78 MB in  3.05 seconds =  25.56 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  78 MB in  3.08 seconds =  25.36 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  78 MB in  3.06 seconds =  25.48 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  78 MB in  3.06 seconds =  25.45 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  78 MB in  3.04 seconds =  25.69 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  78 MB in  3.03 seconds =  25.70 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  78 MB in  3.04 seconds =  25.63 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  64 MB in  3.03 seconds =  21.12 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  64 MB in  3.09 seconds =  20.70 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  64 MB in  3.08 seconds =  20.76 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  64 MB in  3.09 seconds =  20.68 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  62 MB in  3.01 seconds =  20.60 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  62 MB in  3.03 seconds =  20.49 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  62 MB in  3.01 seconds =  20.61 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  62 MB in  3.05 seconds =  20.33 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  62 MB in  3.03 seconds =  20.48 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  64 MB in  3.07 seconds =  20.87 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  78 MB in  3.05 seconds =  25.55 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  78 MB in  3.07 seconds =  25.38 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  78 MB in  3.03 seconds =  25.70 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  78 MB in  3.05 seconds =  25.53 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  78 MB in  3.07 seconds =  25.41 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  78 MB in  3.06 seconds =  25.49 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  78 MB in  3.05 seconds =  25.58 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  78 MB in  3.07 seconds =  25.39 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  62 MB in  3.02 seconds =  20.54 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  62 MB in  3.05 seconds =  20.35 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  62 MB in  3.01 seconds =  20.61 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  62 MB in  3.02 seconds =  20.54 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  62 MB in  3.04 seconds =  20.38 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  64 MB in  3.07 seconds =  20.83 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  62 MB in  3.03 seconds =  20.44 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  62 MB in  3.01 seconds =  20.56 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  62 MB in  3.03 seconds =  20.49 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  74 MB in  3.02 seconds =  24.51 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  78 MB in  3.04 seconds =  25.62 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  78 MB in  3.05 seconds =  25.56 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  78 MB in  3.06 seconds =  25.52 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  78 MB in  3.03 seconds =  25.71 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  78 MB in  3.07 seconds =  25.42 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  80 MB in  3.43 seconds =  23.30 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  80 MB in  3.06 seconds =  26.13 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  64 MB in  3.01 seconds =  21.25 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  64 MB in  3.09 seconds =  20.71 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  64 MB in  3.02 seconds =  21.22 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  64 MB in  3.01 seconds =  21.25 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  66 MB in  3.08 seconds =  21.42 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  64 MB in  3.07 seconds =  20.88 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  64 MB in  3.03 seconds =  21.15 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  64 MB in  3.03 seconds =  21.10 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  64 MB in  3.09 seconds =  20.74 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  80 MB in  3.03 seconds =  26.39 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  80 MB in  3.02 seconds =  26.49 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  80 MB in  3.02 seconds =  26.51 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  80 MB in  3.03 seconds =  26.37 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  82 MB in  3.47 seconds =  23.60 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  80 MB in  3.03 seconds =  26.45 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  78 MB in  3.02 seconds =  25.85 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  80 MB in  3.02 seconds =  26.46 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  72 MB in  3.04 seconds =  23.68 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  64 MB in  3.07 seconds =  20.87 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  64 MB in  3.02 seconds =  21.22 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  64 MB in  3.01 seconds =  21.25 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  66 MB in  3.08 seconds =  21.40 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  64 MB in  3.05 seconds =  20.99 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  64 MB in  3.01 seconds =  21.25 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  64 MB in  3.01 seconds =  21.26 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  64 MB in  3.05 seconds =  21.00 MB/sec
+
+/dev/sdb:
+ Timing buffered disk reads:  64 MB in  3.02 seconds =  21.18 MB/sec
