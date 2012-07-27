@@ -20,29 +20,58 @@
 % OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 % THE SOFTWARE.
 
+% generates all plots as eps for this directory
 
-% plots a hdparm csv graphic
-function generate_plot(logfile, plotname, tit)
+% make one plot for all files with different colors
+function generate_all_plots(epsfilename)
+
+	h2usb = load_data_log_csv('h2usb');
+	h2bbenc = load_data_log_csv('h2bb-enc');
 	
-	% read in logfile csv
-	raw = dlmread(logfile, ';', 0,0); 
-	data = raw(:,1:4);
-	x = data(:,1);
-	y = data(:,4);
-	% plot x: nr of test
-	% plot y: MB/s
+	h2usbMean = compute_mean(h2usb);
+	h2bbencMean = compute_mean(h2bbenc);
 
 	hold on;
-
 	grid on;
-	title(tit);
-	xlabel("Test");
-	ylabel("MB/s");
-	plot(x,y,'r')
+	title('hdparm performance comparison','fontname','times new roman','fontsize',20);
+	xlabel('nr of test','fontname','times new roman','fontsize',20)
+	ylabel('Timing buffered disk reads in MB/s ','fontname','times new roman','fontsize',20)
 
-	set(gca,'fontsize',20,'fontname','times new roman','linewidth',4);
+	plot(h2usb(:,1), h2usb(:,2), 'r');
+	plot(h2bbenc(:,1), h2bbenc(:,2), 'b');
 
-	% save as eps vectorized graphic
-	print(gcf,'-depsc2','-r300',plotname);
+	print(gcf, '-depsc2', '-r300', epsfilename);
+	hold off;
+	
+end % function
 
-endfunction
+function R = load_data_log_csv(prefix)
+		
+	files = dir(sprintf('%s*.log.csv', prefix));
+	R = [];	
+	for i = 1:length(files)
+		raw = dlmread(files(i).name, ';', 0, 0);
+		x = raw(:,1);
+		y = raw(:,4);
+		R = [R,x];
+		R = [R,y];
+	end
+
+end % function
+
+% compute_mean(matrix)
+%
+% computes the mean of each row considering every even row
+%
+% @param matrix
+% @return vector
+function m = compute_mean(M)
+	
+	T = [];
+	for i=2:2:size(M,2)
+		T = [T,M(:,i)];		
+	end	
+	m = mean(T');
+	
+end % function
+
