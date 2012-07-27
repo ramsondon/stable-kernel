@@ -30,15 +30,18 @@ function generate_all_plots(epsfilename)
 	
 	h2usbMean = compute_mean(h2usb);
 	h2bbencMean = compute_mean(h2bbenc);
+	
+	label{1} = 'Host Computer direct USB access';
+	label{2} = 'Host Computer USB access via Proxy'; 
 
 	hold on;
 	grid on;
 	title('hdparm performance comparison','fontname','times new roman','fontsize',20);
 	xlabel('nr of test','fontname','times new roman','fontsize',20)
 	ylabel('Timing buffered disk reads in MB/s ','fontname','times new roman','fontsize',20)
-
 	plot(h2usb(:,1), h2usb(:,2), 'r');
 	plot(h2bbenc(:,1), h2bbenc(:,2), 'b');
+	legend(label, 'location','northeast');
 
 	print(gcf, '-depsc2', '-r300', epsfilename);
 	hold off;
