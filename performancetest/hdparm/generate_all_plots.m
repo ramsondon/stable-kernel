@@ -43,7 +43,8 @@ function generate_all_plots(epsfilename)
 	plot(h2bbenc(:,1), h2bbenc(:,2), 'b');
 	legend(label, 'location','northeast');
 
-	print(gcf, '-depsc2', '-r300', epsfilename);
+	%print(gcf, '-depsc2', '-r300', epsfilename);
+	print(gcf, '-dpng', epsfilename);
 	hold off;
 	
 end % function
