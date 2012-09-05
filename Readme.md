@@ -51,7 +51,8 @@ This Linux Version is for using your BeagleBoard as an encryption proxy for port
 <li>have fun using it.</li>
 <ul>
 
+
 ------------------------
-Hint:
+###Hints
 ------------------------
 remove the network driver in menuconfig while compiling the kernel for better and more stable boot performance
