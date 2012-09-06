@@ -1,0 +1,52 @@
+matthias@rox:~/fhv/masterthesis/encryption-proxy/proxy/scripts$ time cp ~/develop/PhpStorm-4.0.3.tar.gz /media/9B0A-F614/
+
+real	0m4.962s
+user	0m0.004s
+sys	0m0.140s
+matthias@rox:~/fhv/masterthesis/encryption-proxy/proxy/scripts$ time cp ~/develop/PhpStorm-4.0.3.tar.gz /media/9B0A-F614/
+
+real	0m5.748s
+user	0m0.000s
+sys	0m0.204s
+matthias@rox:~/fhv/masterthesis/encryption-proxy/proxy/scripts$ time cp ~/develop/PhpStorm-4.0.3.tar.gz /media/9B0A-F614/
+
+real	0m5.777s
+user	0m0.004s
+sys	0m0.188s
+matthias@rox:~/fhv/masterthesis/encryption-proxy/proxy/scripts$ time cp ~/develop/PhpStorm-4.0.3.tar.gz /media/9B0A-F614/
+
+real	0m5.729s
+user	0m0.004s
+sys	0m0.188s
+matthias@rox:~/fhv/masterthesis/encryption-proxy/proxy/scripts$ time cp ~/develop/PhpStorm-4.0.3.tar.gz /media/9B0A-F614/
+
+real	0m5.413s
+user	0m0.000s
+sys	0m0.188s
+matthias@rox:~/fhv/masterthesis/encryption-proxy/proxy/scripts$ time cp ~/develop/PhpStorm-4.0.3.tar.gz /media/9B0A-F614/
+
+real	0m5.743s
+user	0m0.000s
+sys	0m0.200s
+matthias@rox:~/fhv/masterthesis/encryption-proxy/proxy/scripts$ time cp ~/develop/PhpStorm-4.0.3.tar.gz /media/9B0A-F614/
+
+real	0m5.081s
+user	0m0.000s
+sys	0m0.188s
+matthias@rox:~/fhv/masterthesis/encryption-proxy/proxy/scripts$ time cp ~/develop/PhpStorm-4.0.3.tar.gz /media/9B0A-F614/t1
+
+real	0m5.475s
+user	0m0.000s
+sys	0m0.152s
+matthias@rox:~/fhv/masterthesis/encryption-proxy/proxy/scripts$ time cp ~/develop/PhpStorm-4.0.3.tar.gz /media/9B0A-F614/t2
+
+real	0m5.436s
+user	0m0.000s
+sys	0m0.148s
+matthias@rox:~/fhv/masterthesis/encryption-proxy/proxy/scripts$ time cp ~/develop/PhpStorm-4.0.3.tar.gz /media/9B0A-F614/t2
+
+real	0m5.678s
+user	0m0.000s
+sys	0m0.208s
+matthias@rox:~/fhv/masterthesis/encryption-proxy/proxy/scripts$ 
+

@@ -1,0 +1,52 @@
+matthias@rox:~$ time cp ~/develop/PhpStorm-4.0.3.tar.gz /media/01AD-44A0/
+
+real	0m12.093s
+user	0m0.004s
+sys	0m0.212s
+matthias@rox:~$ time cp ~/develop/PhpStorm-4.0.3.tar.gz /media/01AD-44A0/
+
+real	0m14.414s
+user	0m0.004s
+sys	0m0.200s
+matthias@rox:~$ time cp ~/develop/PhpStorm-4.0.3.tar.gz /media/01AD-44A0/
+
+real	0m32.121s
+user	0m0.000s
+sys	0m0.304s
+matthias@rox:~$ time cp ~/develop/PhpStorm-4.0.3.tar.gz /media/01AD-44A0/
+
+real	0m17.409s
+user	0m0.004s
+sys	0m0.212s
+matthias@rox:~$ time cp ~/develop/PhpStorm-4.0.3.tar.gz /media/01AD-44A0/
+
+real	0m21.173s
+user	0m0.000s
+sys	0m0.216s
+matthias@rox:~$ time cp ~/develop/PhpStorm-4.0.3.tar.gz /media/01AD-44A0/
+
+real	0m29.116s
+user	0m0.000s
+sys	0m0.204s
+matthias@rox:~$ time cp ~/develop/PhpStorm-4.0.3.tar.gz /media/01AD-44A0/
+
+real	0m37.023s
+user	0m0.000s
+sys	0m0.224s
+matthias@rox:~$ time cp ~/develop/PhpStorm-4.0.3.tar.gz /media/01AD-44A0/t1
+
+real	0m17.135s
+user	0m0.004s
+sys	0m0.172s
+matthias@rox:~$ time cp ~/develop/PhpStorm-4.0.3.tar.gz /media/01AD-44A0/t2
+
+real	0m12.703s
+user	0m0.000s
+sys	0m0.156s
+matthias@rox:~$ time cp ~/develop/PhpStorm-4.0.3.tar.gz /media/01AD-44A0/t3
+
+real	0m18.713s
+user	0m0.004s
+sys	0m0.148s
+matthias@rox:~$ 
+

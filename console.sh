@@ -57,6 +57,8 @@ SCRIPT_BUILD_KERNEL="build_kernel.sh"
 SCRIPT_INSTALL_IMAGE="${DIR_KERNEL}/tools/install_image.sh"
 SCRIPT_SETUP_SDCARD="${DIR_UBUNTU}/setup_sdcard.sh"
 SCRIPT_PROXY_INSTALL="proxy-install.sh"
+SCRIPT_DONGLE_DEPS_INSTALL="dongle-install.sh"
+SCRIPT_DONGLE_CREATE="create-dongle.sh"
 
 
 function build_kernel()
@@ -91,6 +93,20 @@ function setup_proxy()
 	echo "proxy installed successfully"
 }
 
+function install_dongle_deps()
+{
+	echo "preparing system for dongle creation"
+	cd ${CURRENT_DIR}
+	/bin/bash ${SCRIPT_DONGLE_DEPS_INSTALL}
+}
+
+function create_dongle()
+{
+	echo "creating new dongle device"
+	cd ${CURRENT_DIR}
+	/bin/bash ${SCRIPT_DONGLE_CREATE}
+}
+
 
 # **************************** console functionalities *************************
 
@@ -110,6 +126,7 @@ function echo_header()
 }
 
 CMD_HELP="help"
+CMD_CREATE_DONGLE="create:dongle"
 CMD_INIT_MMC="init:mmc"
 CMD_BUILD_KERNEL="build:kernel"
 CMD_INSTALL_KERNEL="install:kernel"
@@ -117,7 +134,7 @@ CMD_INSTALL_PROXY="install:proxy"
 CMD_INSTALL_ALL="install:all"
 CMD_QUIT="quit"
 
-OPTION_MMC="--mmc"
+OPTION_MMC="--dev"
 
 
 function echo_help()
@@ -130,18 +147,22 @@ function echo_help()
 	echo "PARAMETERS"
 	echo $'\t'"<command>"
 	echo $'\t\t'${CMD_HELP}$'\t\t'"prints help"
+	echo $'\t\t'${CMD_QUIT}
+	echo ""
         echo $'\t\t'${CMD_INIT_MMC}$'\t'"setup sdcard with ubuntu 12.04"
         echo $'\t\t'${CMD_BUILD_KERNEL}$'\t'"builds 3.2.21-encryption-proxy kernel"
-
         echo $'\t\t'${CMD_INSTALL_KERNEL}$'\t'"copies 3.2.21-encryption-proxy kernel to sdcard"
         echo $'\t\t'${CMD_INSTALL_PROXY}$'\t'"installs required encryption software to sdcard"
 	echo ""
 	echo $'\t\t'${CMD_INSTALL_ALL}$'\t'"inits mmc, builds and installs kernel"
-	echo $'\t\t\t\t'"3.2.21-encryption-proxy and all its dependencies"
-	echo $'\t\t'${CMD_QUIT}
+	echo $'\t\t\t\t'"3.2.21-encryption-proxy and its dependencies"
+#	echo ""
+#	echo ""
+#	echo $'\t\t'${CMD_CREATE_DONGLE}$'\t'"creates a new dongle device with random key"
+	echo ""
 	echo ""
 	echo $'\t'"<options>"
-	echo $'\t\t'${OPTION_MMC} "<device>"$'\t'"the mmc device (e.g. /dev/sdc)"
+	echo $'\t\t'${OPTION_MMC} "<device>"$'\t'"the mmc or usb device (e.g. /dev/sdc)"
 }
 
 # interpretes commands given to console
@@ -174,6 +195,11 @@ function interprete_command()
 			build_kernel
 			copy_kernel_to_sdcard
 			setup_proxy
+			return 0
+		;;
+		${CMD_CREATE_DONGLE})
+			#install_dongle_deps
+			create_dongle ${MMC}
 			return 0
 		;;
 		${CMD_QUIT})
