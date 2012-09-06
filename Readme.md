@@ -50,3 +50,9 @@ This Linux Version is for using your BeagleBoard as an encryption proxy for port
 <li>wait until your USB storage device plugged in USB slot Host 1 is being encrypted and your computer automatically mounts the new encrypted device.</li>
 <li>have fun using it.</li>
 <ul>
+
+
+------------------------
+###Hints
+------------------------
+remove the network driver in menuconfig while compiling the kernel for better and more stable boot performance
